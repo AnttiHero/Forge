@@ -1,0 +1,219 @@
+[
+  {
+    "id": "obl-01",
+    "fund_id": "fund-2",
+    "investor_id": "inv-norrland",
+    "source_document_id": "doc-sl-norrland",
+    "source_provision_id": "p-sl-norr-1",
+    "type": "excuse",
+    "summary": "Norrland Pension AB is excused from investments in EU-sanctioned or sub-investment-grade jurisdictions, including rated jurisdictions in sub-Saharan Africa.",
+    "geography": "sub-Saharan Africa",
+    "source_clause": "Norrland Pension AB shall be excused from participation in any Portfolio Investment in a Portfolio Company whose principal operations are located in a jurisdiction that is subject to European Union restrictive measures or that is rated below investment grade by at least two internationally recognized rating agencies, including for the avoidance of doubt any jurisdiction in sub-Saharan Africa so rated."
+  },
+  {
+    "id": "obl-02",
+    "fund_id": "fund-2",
+    "investor_id": "inv-norrland",
+    "source_document_id": "doc-sl-norrland",
+    "source_provision_id": "p-sl-norr-2",
+    "type": "notice",
+    "summary": "15 Business Days' advance written notice to Norrland before closing any investment in an excusal-listed jurisdiction.",
+    "geography": "sub-Saharan Africa",
+    "notice_days": 15,
+    "source_clause": "The General Partner shall deliver written notice of any proposed Portfolio Investment in a jurisdiction described in Paragraph 1 to Norrland Pension AB no fewer than fifteen (15) Business Days prior to the closing of such investment"
+  },
+  {
+    "id": "obl-03",
+    "fund_id": "fund-2",
+    "investor_id": "inv-norrland",
+    "source_document_id": "doc-sl-norrland",
+    "source_provision_id": "p-sl-norr-3",
+    "type": "reporting",
+    "summary": "Annual ESG report to Norrland (Invest Europe template) within 120 days of fiscal year end.",
+    "notice_days": 120,
+    "source_clause": "The General Partner shall deliver to Norrland Pension AB an annual environmental, social and governance report substantially in the form of the Invest Europe ESG reporting template within one hundred twenty (120) days after the end of each fiscal year."
+  },
+  {
+    "id": "obl-04",
+    "fund_id": "fund-2",
+    "investor_id": "inv-edfc",
+    "source_document_id": "doc-sl-edfc",
+    "source_provision_id": "p-sl-edfc-1",
+    "type": "reporting",
+    "summary": "Development-impact and E&S report to EDFC within 45 days of closing any sub-Saharan Africa investment, then annually while held.",
+    "geography": "sub-Saharan Africa",
+    "notice_days": 45,
+    "source_clause": "With respect to any Portfolio Investment in a Portfolio Company whose principal operations are located in sub-Saharan Africa, the General Partner shall deliver to Equatorial Development Finance Corporation a development-impact and environmental and social report no later than forty-five (45) days after the closing of such investment"
+  },
+  {
+    "id": "obl-05",
+    "fund_id": "fund-2",
+    "investor_id": "inv-edfc",
+    "source_document_id": "doc-sl-edfc",
+    "source_provision_id": "p-sl-edfc-2",
+    "type": "reporting",
+    "summary": "Annual anti-bribery/anti-corruption compliance certification to EDFC within 90 days of fiscal year end.",
+    "notice_days": 90,
+    "source_clause": "The General Partner shall certify to Equatorial Development Finance Corporation annually, within ninety (90) days after the end of each fiscal year, that the Partnership and each Portfolio Company maintain policies reasonably designed to ensure compliance with applicable anti-bribery and anti-corruption laws."
+  },
+  {
+    "id": "obl-06",
+    "fund_id": "fund-2",
+    "investor_id": "inv-edfc",
+    "source_document_id": "doc-sl-edfc",
+    "source_provision_id": "p-sl-edfc-3",
+    "type": "investment_restriction",
+    "summary": "EDFC's commitment must not be drawn for companies with >10% revenue from defense, tobacco or thermal coal.",
+    "source_clause": "The Commitment of Equatorial Development Finance Corporation shall not be drawn for any Portfolio Investment in a Portfolio Company that derives more than ten percent (10%) of its revenue from defense materiel, tobacco products or thermal coal extraction."
+  },
+  {
+    "id": "obl-07",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-geo",
+    "type": "investment_restriction",
+    "summary": "Fund II emerging-markets investments capped at 20% of aggregate commitments.",
+    "geography": "Emerging Markets",
+    "source_clause": "Investments in Portfolio Companies whose principal operations are located in Emerging Markets shall not exceed 20% of aggregate Commitments"
+  },
+  {
+    "id": "obl-08",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-geo",
+    "type": "consent",
+    "summary": "Advisory Board consent required for any single emerging-markets investment over $100M.",
+    "geography": "Emerging Markets",
+    "source_clause": "any single such investment in excess of $100,000,000 shall require the prior written consent of the Advisory Board"
+  },
+  {
+    "id": "obl-09",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-excuse",
+    "type": "notice",
+    "summary": "15 Business Days' written notice to excused LPs before closing any investment in an excused category.",
+    "notice_days": 15,
+    "source_clause": "the General Partner shall deliver written notice of any proposed investment in an excused category to each affected Limited Partner no fewer than fifteen (15) Business Days prior to the closing of such investment"
+  },
+  {
+    "id": "obl-10",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-mfn",
+    "type": "mfn",
+    "summary": "Annual MFN compendium to LPs ≥ $75M; 30-day election window after receipt.",
+    "notice_days": 30,
+    "source_clause": "The General Partner shall deliver to each Limited Partner whose Commitment equals or exceeds $75,000,000 an annual compendium of side letter provisions granted to other Limited Partners"
+  },
+  {
+    "id": "obl-11",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-reporting",
+    "type": "reporting",
+    "summary": "Fund II quarterly reports within 45 days; audited annuals within 90 days.",
+    "notice_days": 45,
+    "source_clause": "unaudited quarterly reports within forty-five (45) days after the end of each of the first three fiscal quarters"
+  },
+  {
+    "id": "obl-12",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-keyperson",
+    "type": "notice",
+    "summary": "Key person event: notify LPs within 10 Business Days; Investment Period auto-suspends.",
+    "notice_days": 10,
+    "source_clause": "the General Partner shall notify the Limited Partners within ten (10) Business Days and the Investment Period shall be automatically suspended"
+  },
+  {
+    "id": "obl-13",
+    "fund_id": "fund-2",
+    "source_document_id": "doc-f2-lpa",
+    "source_provision_id": "p-f2-fees",
+    "type": "reporting",
+    "summary": "Annual statement of fees, expenses and offsets within 60 days of fiscal year end.",
+    "notice_days": 60,
+    "source_clause": "The General Partner shall deliver to each Limited Partner an annual statement of fees, expenses and offsets within sixty (60) days after the end of each fiscal year."
+  },
+  {
+    "id": "obl-14",
+    "fund_id": "fund-1",
+    "source_document_id": "doc-f1-lpa",
+    "source_provision_id": "p-f1-geo",
+    "type": "consent",
+    "summary": "Fund I: Advisory Board consent required to exceed 15% of commitments outside North America and Western Europe.",
+    "geography": "Outside North America / Western Europe",
+    "source_clause": "The Partnership shall not, without the prior written consent of the Advisory Board, invest more than 15% of aggregate Commitments in Portfolio Companies whose principal operations are located outside North America and Western Europe."
+  },
+  {
+    "id": "obl-15",
+    "fund_id": "fund-1",
+    "source_document_id": "doc-f1-lpa",
+    "source_provision_id": "p-f1-reporting",
+    "type": "reporting",
+    "summary": "Fund I audited annual financial statements within 90 days of fiscal year end.",
+    "notice_days": 90,
+    "source_clause": "The General Partner shall deliver to each Limited Partner audited annual financial statements within ninety (90) days after the end of each fiscal year"
+  },
+  {
+    "id": "obl-16",
+    "fund_id": "fund-1",
+    "source_document_id": "doc-f1-lpa",
+    "source_provision_id": "p-f1-transfer",
+    "type": "transfer_restriction",
+    "summary": "Fund I LP transfers require prior written GP consent (sole discretion).",
+    "source_clause": "No Limited Partner may sell, assign or otherwise transfer its interest in the Partnership without the prior written consent of the General Partner"
+  },
+  {
+    "id": "obl-17",
+    "fund_id": "fund-1",
+    "source_document_id": "doc-f1-lpa",
+    "source_provision_id": "p-f1-keyperson",
+    "type": "notice",
+    "summary": "Fund I key person event: LP notice within 10 Business Days; Investment Period suspends pending 60% LP vote.",
+    "notice_days": 10,
+    "source_clause": "the General Partner shall notify the Limited Partners within ten (10) Business Days of becoming aware of such circumstance and the Investment Period shall be suspended"
+  },
+  {
+    "id": "obl-18",
+    "fund_id": "fund-1",
+    "source_document_id": "doc-f1-lpa",
+    "source_provision_id": "p-f1-coinvest",
+    "type": "consent",
+    "summary": "Co-investment opportunities offered pro rata to Fund I LPs with commitments ≥ $50M.",
+    "source_clause": "Co-investment opportunities shall be offered to Limited Partners whose Commitments equal or exceed $50,000,000, allocated pro rata to Commitments"
+  },
+  {
+    "id": "obl-19",
+    "fund_id": "fund-1",
+    "investor_id": "inv-hokuriku",
+    "source_document_id": "doc-sl-hokuriku",
+    "source_provision_id": "p-sl-hoku-1",
+    "type": "reporting",
+    "summary": "Quarterly unhedged non-USD currency exposure statement to Hokuriku within 30 days of quarter end.",
+    "notice_days": 30,
+    "source_clause": "The General Partner shall deliver to Hokuriku Mutual Life Insurance Company a quarterly statement of the Partnership's unhedged non-USD currency exposure within thirty (30) days after the end of each fiscal quarter."
+  },
+  {
+    "id": "obl-20",
+    "fund_id": "fund-1",
+    "investor_id": "inv-hokuriku",
+    "source_document_id": "doc-sl-hokuriku",
+    "source_provision_id": "p-sl-hoku-2",
+    "type": "transfer_restriction",
+    "summary": "Pre-approved consent for Hokuriku transfers to wholly-owned affiliates meeting legal requirements.",
+    "source_clause": "the General Partner consents in advance to any transfer by Hokuriku Mutual Life Insurance Company of all or part of its interest to a wholly-owned Affiliate"
+  },
+  {
+    "id": "obl-21",
+    "fund_id": "fund-1",
+    "investor_id": "inv-hokuriku",
+    "source_document_id": "doc-sl-hokuriku",
+    "source_provision_id": "p-sl-hoku-3",
+    "type": "mfn",
+    "summary": "Hokuriku MFN election right: 30 days from receipt of side letter compendium.",
+    "notice_days": 30,
+    "source_clause": "Hokuriku Mutual Life Insurance Company shall be entitled to elect the benefit of any provision granted in any other side letter relating to this fund"
+  }
+]

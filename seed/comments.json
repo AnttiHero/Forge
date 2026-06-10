@@ -1,0 +1,72 @@
+[
+  {
+    "id": "c-01",
+    "fund_id": "fund-3",
+    "investor_id": "inv-norrland",
+    "provision_topic": "geographic",
+    "text": "We note the draft retains a North America / Europe focus. Should the geographic mandate be expanded to emerging markets, Norrland requires that its Fund II excusal rights (EU restrictive measures; sub-investment-grade jurisdictions, including rated jurisdictions in sub-Saharan Africa) carry over in full, together with the 15 Business Day advance notice mechanic."
+  },
+  {
+    "id": "c-02",
+    "fund_id": "fund-3",
+    "investor_id": "inv-edfc",
+    "provision_topic": "geographic",
+    "text": "EDFC supports a measured expansion of the geographic mandate to emerging markets. We request development-impact and E&S reporting parity with our Fund II side letter for any sub-Saharan Africa investment, and confirmation that the excluded-sectors restriction carries over."
+  },
+  {
+    "id": "c-03",
+    "fund_id": "fund-3",
+    "investor_id": "inv-keystone",
+    "provision_topic": "mfn",
+    "text": "The $75,000,000 MFN threshold in Section 13.9 should be reduced to $50,000,000, consistent with what we understand peer sponsors are granting in current vintages. At minimum the compendium should be delivered semi-annually rather than annually."
+  },
+  {
+    "id": "c-04",
+    "fund_id": "fund-3",
+    "investor_id": "inv-khalij",
+    "provision_topic": "fees",
+    "text": "The management fee step-down should be triggered on the earlier of (i) expiration of the Investment Period and (ii) the date a successor fund begins accruing fees. Khalij also requests a fee holiday on the portion of its commitment above $250,000,000."
+  },
+  {
+    "id": "c-05",
+    "fund_id": "fund-3",
+    "investor_id": "inv-hokuriku",
+    "provision_topic": "reporting",
+    "text": "Hokuriku requests continuation of the quarterly unhedged non-USD currency exposure statement within 30 days of quarter end, as provided in our Fund I side letter."
+  },
+  {
+    "id": "c-06",
+    "fund_id": "fund-3",
+    "investor_id": "inv-atlas",
+    "provision_topic": "mfn",
+    "text": "Section 13.9 should clarify that the MFN compendium is delivered within 60 days of the final closing for the initial compendium, with elections exercisable on a provision-by-provision basis rather than as a package."
+  },
+  {
+    "id": "c-07",
+    "fund_id": "fund-3",
+    "investor_id": "inv-cresswell",
+    "provision_topic": "fees",
+    "text": "Cresswell expects 100% fee offset to be stated expressly to include placement-agent fees and any broken-deal expenses recovered from co-investors."
+  },
+  {
+    "id": "c-08",
+    "fund_id": "fund-3",
+    "investor_id": "inv-ontario",
+    "provision_topic": "co_invest",
+    "text": "Ontario Metalworkers requests that co-investment opportunities be offered pro rata to commitments for all LPs above $100,000,000, with a 10 Business Day response window and no management fee or carry on co-invested capital."
+  },
+  {
+    "id": "c-09",
+    "fund_id": "fund-3",
+    "investor_id": "inv-suedwest",
+    "provision_topic": "reporting",
+    "text": "Südwest requires a Solvency II data pack (look-through asset-class and rating detail) within 45 days of each quarter end. Please confirm whether the standard quarterly report can be extended or whether this should sit in our side letter."
+  },
+  {
+    "id": "c-10",
+    "fund_id": "fund-3",
+    "investor_id": "inv-bergamo",
+    "provision_topic": "key_person",
+    "text": "The key person definition in Section 4.7 should name a third principal. Two of three key persons stepping back is too high a bar for suspension given the size of this vintage; we propose two of four with at least one founder."
+  }
+]

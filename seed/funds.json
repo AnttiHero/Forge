@@ -1,0 +1,29 @@
+[
+  {
+    "id": "fund-1",
+    "name": "Vulcan Industrial Partners, L.P.",
+    "numeral": 1,
+    "target_size_usd": 850000000,
+    "strategy": "North American industrials buyout",
+    "status": "closed",
+    "vintage": 2018
+  },
+  {
+    "id": "fund-2",
+    "name": "Vulcan Industrial Partners II, L.P.",
+    "numeral": 2,
+    "target_size_usd": 1600000000,
+    "strategy": "Industrials and infrastructure-adjacent buyout, North America and Europe",
+    "status": "closed",
+    "vintage": 2021
+  },
+  {
+    "id": "fund-3",
+    "name": "Vulcan Industrial Partners III, L.P.",
+    "numeral": 3,
+    "target_size_usd": 3000000000,
+    "strategy": "Global industrials buyout",
+    "status": "forming",
+    "vintage": 2026
+  }
+]

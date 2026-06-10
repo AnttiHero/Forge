@@ -1,0 +1,86 @@
+[
+  {
+    "id": "mp-geographic",
+    "topic": "geographic",
+    "heading": "Geographic Restrictions",
+    "text": "The Partnership shall invest primarily in Portfolio Companies whose principal operations are located in [PRIMARY REGIONS]. The Partnership shall not invest more than [PERCENTAGE]% of aggregate Commitments in Portfolio Companies whose principal operations are located outside the primary regions, and any single such investment in excess of $[THRESHOLD] shall require the prior written consent of the Advisory Board. For purposes of this Section, the location of a Portfolio Company's principal operations shall be determined by reference to the jurisdiction in which the majority of its revenue is generated or assets are held."
+  },
+  {
+    "id": "mp-emerging-markets",
+    "topic": "geographic",
+    "heading": "Emerging Markets Basket",
+    "text": "Notwithstanding the foregoing, the Partnership may invest up to [PERCENTAGE]% of aggregate Commitments in Portfolio Companies whose principal operations are located in Emerging Markets, provided that (i) no such investment shall be made in a jurisdiction subject to applicable sanctions regimes, (ii) the General Partner shall deliver to each Limited Partner that has identified Emerging Markets as an excused category written notice no fewer than [NUMBER] Business Days prior to closing, and (iii) any single Emerging Markets investment in excess of $[THRESHOLD] shall require the prior consent of the Advisory Board."
+  },
+  {
+    "id": "mp-excuse",
+    "topic": "excuse",
+    "heading": "Excused Investments",
+    "text": "A Limited Partner may, by written notice delivered at or prior to its admission, identify categories of investments from which it shall be excused on the basis of law, regulation or written investment policy. An excused Limited Partner's Commitment shall not be drawn for an excused investment, and the General Partner shall deliver notice of any proposed investment falling within an excused category no fewer than [NUMBER] Business Days prior to the closing of such investment."
+  },
+  {
+    "id": "mp-mfn",
+    "topic": "mfn",
+    "heading": "Most Favored Nations",
+    "text": "The General Partner shall, within [NUMBER] days after the final closing, deliver to each Limited Partner whose Commitment equals or exceeds $[THRESHOLD] a compendium of all side letter provisions granted to other Limited Partners, excluding provisions relating to legal, tax, regulatory or internal policy requirements particular to the recipient. Each eligible Limited Partner may elect the benefit of any disclosed provision within [NUMBER] days of receipt of the compendium."
+  },
+  {
+    "id": "mp-co-invest",
+    "topic": "co_invest",
+    "heading": "Co-Investment Opportunities",
+    "text": "To the extent the General Partner determines that a co-investment opportunity exists with respect to a proposed Portfolio Investment, the General Partner shall offer such opportunity to Limited Partners whose Commitments equal or exceed $[THRESHOLD], allocated pro rata to Commitments unless the General Partner reasonably determines that strategic considerations, timing or regulatory constraints require a different allocation. No carried interest or management fee shall be charged on co-investment capital unless otherwise agreed."
+  },
+  {
+    "id": "mp-fees",
+    "topic": "fees",
+    "heading": "Management Fee",
+    "text": "During the Investment Period, the Partnership shall pay the Manager an annual management fee equal to [PERCENTAGE]% of aggregate Commitments, payable semi-annually in advance. Following the earlier of the expiration of the Investment Period and the date on which a successor fund begins accruing management fees, the management fee shall step down to [PERCENTAGE]% of invested capital. One hundred percent (100%) of any transaction, monitoring, directors' or break-up fees received by the Manager shall offset the management fee otherwise payable."
+  },
+  {
+    "id": "mp-distributions",
+    "topic": "distributions",
+    "heading": "Distributions; Carried Interest",
+    "text": "Distributable proceeds shall be apportioned (i) first, 100% to the Limited Partners until they have received a return of all contributed capital plus a preferred return of [PERCENTAGE]% per annum, compounded annually; (ii) second, to the General Partner as a catch-up of [PERCENTAGE]%; and (iii) thereafter, [PERCENTAGE]% to the Limited Partners and [PERCENTAGE]% to the General Partner as carried interest, subject to a general partner clawback secured by personal guarantees of the Principals."
+  },
+  {
+    "id": "mp-reporting",
+    "topic": "reporting",
+    "heading": "Reports to Limited Partners",
+    "text": "The General Partner shall deliver to each Limited Partner (i) audited annual financial statements within [NUMBER] days after the end of each fiscal year, (ii) unaudited quarterly reports within [NUMBER] days after the end of each of the first three fiscal quarters, and (iii) annual tax information reasonably necessary for the preparation of each Limited Partner's tax returns. Quarterly reports shall include a schedule of Portfolio Investments, valuations determined in accordance with the Valuation Policy, and a statement of fees and expenses."
+  },
+  {
+    "id": "mp-key-person",
+    "topic": "key_person",
+    "heading": "Key Person Event",
+    "text": "If at any time during the Investment Period fewer than [NUMBER] of the Key Persons devote substantially all of their business time to the affairs of the Partnership and its parallel vehicles, the General Partner shall notify the Limited Partners within [NUMBER] Business Days and the Investment Period shall be automatically suspended. The Investment Period may be reinstated upon the affirmative vote of Limited Partners holding at least [PERCENTAGE]% of aggregate Commitments, and shall terminate if not reinstated within [NUMBER] days."
+  },
+  {
+    "id": "mp-transfer",
+    "topic": "transfer",
+    "heading": "Transfers of Interests",
+    "text": "No Limited Partner may sell, assign, pledge or otherwise transfer its interest in the Partnership without the prior written consent of the General Partner, such consent not to be unreasonably withheld in the case of a transfer to an Affiliate of the transferring Limited Partner that satisfies applicable legal and regulatory requirements. Any purported transfer in violation of this Section shall be void ab initio."
+  },
+  {
+    "id": "mp-advisory-board",
+    "topic": "advisory_board",
+    "heading": "Advisory Board",
+    "text": "The General Partner shall establish an Advisory Board consisting of representatives of [NUMBER] to [NUMBER] Limited Partners selected by the General Partner. The Advisory Board shall review and approve or disapprove conflicts of interest, valuations contested by Limited Partners, extensions of the Investment Period, and such other matters as are expressly reserved to it under this Agreement. Advisory Board approval shall require the affirmative vote of a majority of its members."
+  },
+  {
+    "id": "mp-confidentiality",
+    "topic": "confidentiality",
+    "heading": "Confidentiality",
+    "text": "Each Limited Partner shall maintain the confidentiality of all non-public information received in connection with the Partnership, save for disclosures required by applicable law, regulation or freedom-of-information regime, in which case the disclosing Limited Partner shall, to the extent legally permissible, provide the General Partner with prior written notice and cooperate in seeking confidential treatment."
+  },
+  {
+    "id": "mp-capital-calls",
+    "topic": "capital_calls",
+    "heading": "Capital Contributions; Drawdowns",
+    "text": "Capital contributions shall be drawn down on no fewer than [NUMBER] Business Days' written notice, which notice shall specify the purpose of the drawdown in reasonable detail. A Limited Partner that fails to fund a drawdown when due shall, after a cure period of [NUMBER] Business Days, be subject to the default remedies set forth in this Agreement, including forfeiture of up to [PERCENTAGE]% of its capital account."
+  },
+  {
+    "id": "mp-indemnification",
+    "topic": "indemnification",
+    "heading": "Exculpation and Indemnification",
+    "text": "No Indemnified Person shall be liable to the Partnership or any Partner for any act or omission taken in good faith and in the reasonable belief that such act or omission was in, or not opposed to, the best interests of the Partnership, except for acts constituting fraud, willful misconduct or gross negligence. The Partnership shall indemnify each Indemnified Person against losses arising out of the affairs of the Partnership, other than losses arising from conduct for which exculpation is unavailable."
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "name": "forge",
+  "version": "0.1.0",
+  "description": "Forge — a fund formation engine. Institutional knowledge at every lawyer's fingertips.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx --env-file-if-exists=.env src/server.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "seed": "tsx --env-file-if-exists=.env src/seed/seed.ts",
+    "smoke": "tsx --env-file-if-exists=.env scripts/smoke.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@fastify/cors": "^11.2.0",
+    "@fastify/multipart": "^9.4.0",
+    "@fastify/static": "^9.0.0",
+    "better-sqlite3": "^12.6.2",
+    "docx": "^9.7.1",
+    "fastify": "^5.7.4",
+    "mammoth": "^1.12.0",
+    "pdf-parse": "^1.1.4",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

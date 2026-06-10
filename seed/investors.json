@@ -1,0 +1,16 @@
+[
+  { "id": "inv-norrland", "name": "Norrland Pension AB", "type": "pension", "jurisdiction": "Sweden", "commitments": { "fund-1": 40000000, "fund-2": 90000000, "fund-3": 150000000 } },
+  { "id": "inv-edfc", "name": "Equatorial Development Finance Corporation", "type": "dfi", "jurisdiction": "Netherlands", "commitments": { "fund-2": 75000000, "fund-3": 125000000 } },
+  { "id": "inv-keystone", "name": "Keystone State Teachers' Retirement System", "type": "pension", "jurisdiction": "United States", "commitments": { "fund-1": 100000000, "fund-2": 175000000, "fund-3": 250000000 } },
+  { "id": "inv-khalij", "name": "Khalij Investment Authority", "type": "swf", "jurisdiction": "United Arab Emirates", "commitments": { "fund-2": 200000000, "fund-3": 300000000 } },
+  { "id": "inv-cresswell", "name": "Cresswell University Endowment", "type": "endowment", "jurisdiction": "United States", "commitments": { "fund-1": 35000000, "fund-2": 60000000, "fund-3": 80000000 } },
+  { "id": "inv-hokuriku", "name": "Hokuriku Mutual Life Insurance Company", "type": "insurer", "jurisdiction": "Japan", "commitments": { "fund-1": 50000000, "fund-2": 85000000, "fund-3": 110000000 } },
+  { "id": "inv-atlas", "name": "Atlas Fund Partners LLP", "type": "fund_of_funds", "jurisdiction": "United Kingdom", "commitments": { "fund-1": 25000000, "fund-2": 45000000, "fund-3": 70000000 } },
+  { "id": "inv-bergamo", "name": "Bergamo Famiglia Capital S.r.l.", "type": "family_office", "jurisdiction": "Italy", "commitments": { "fund-2": 30000000, "fund-3": 50000000 } },
+  { "id": "inv-ontario", "name": "Ontario Metalworkers Pension Plan", "type": "pension", "jurisdiction": "Canada", "commitments": { "fund-1": 80000000, "fund-2": 120000000, "fund-3": 175000000 } },
+  { "id": "inv-suedwest", "name": "Südwest Versicherung AG", "type": "insurer", "jurisdiction": "Germany", "commitments": { "fund-2": 65000000, "fund-3": 95000000 } },
+  { "id": "inv-pacific", "name": "Pacific Crest Endowment Trust", "type": "endowment", "jurisdiction": "United States", "commitments": { "fund-1": 20000000, "fund-3": 45000000 } },
+  { "id": "inv-fjord", "name": "Fjordkapital AS", "type": "family_office", "jurisdiction": "Norway", "commitments": { "fund-3": 40000000 } },
+  { "id": "inv-meridian", "name": "Meridian Allocators Fund of Funds LP", "type": "fund_of_funds", "jurisdiction": "United States", "commitments": { "fund-2": 55000000, "fund-3": 85000000 } },
+  { "id": "inv-tallgrass", "name": "Tallgrass County Employees' Retirement Fund", "type": "pension", "jurisdiction": "United States", "commitments": { "fund-1": 30000000, "fund-3": 60000000 } }
+]

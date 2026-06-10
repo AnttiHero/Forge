@@ -1,0 +1,581 @@
+@import 'tailwindcss';
+
+@theme {
+  /* warm paper surfaces (Claude-like) */
+  --color-page: #faf9f6;
+  --color-surface: #ffffff;
+  --color-coal: #0a0a0b; /* intro veil only */
+  /* ink scale */
+  --color-bone: #1d1d1f; /* primary text */
+  --color-fog: #6b6b70; /* secondary text */
+  /* brand + system colors, tuned for light backgrounds */
+  --color-ember: #c45f3f;
+  --color-ember-dim: #a94e31;
+  --color-verdant: #1a7f37;
+  --color-warn: #9a6700;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-page);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: var(--color-ember);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(196, 95, 63, 0.7);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* slim, quiet scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.28);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* faint warm glow at the top of the page — barely there, but felt */
+.app-bg {
+  background:
+    radial-gradient(ellipse 90% 480px at 50% -120px, rgba(196, 95, 63, 0.055), transparent 70%),
+    var(--color-page);
+}
+
+/* ── Surfaces ──────────────────────────────────────────────────────── */
+
+.card {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.065);
+  background: var(--color-surface);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.025),
+    0 2px 6px rgba(0, 0, 0, 0.035),
+    0 12px 32px rgba(0, 0, 0, 0.055);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.card-hover:hover {
+  border-color: rgba(0, 0, 0, 0.11);
+  transform: translateY(-2px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 18px rgba(0, 0, 0, 0.06),
+    0 28px 64px rgba(0, 0, 0, 0.11);
+}
+
+/* hero-tier card — for the answer, the thing the user came for */
+.card-elevated {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: linear-gradient(180deg, #ffffff 0%, #fffdfb 100%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 6px 16px rgba(0, 0, 0, 0.05),
+    0 24px 60px rgba(0, 0, 0, 0.09),
+    0 48px 120px rgba(196, 95, 63, 0.05);
+}
+
+.glass {
+  /* the filter lives in a custom property so the minifier can't mangle the
+     space between blur() and saturate() (which invalidates the declaration) */
+  --glass-filter: blur(28px) saturate(1.7);
+  background: rgba(250, 249, 246, 0.72);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+}
+
+.hairline-b {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+/* header gains elevation only once the page scrolls under it */
+.header-elevated {
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.05),
+    0 8px 28px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Controls ──────────────────────────────────────────────────────── */
+
+.field {
+  border-radius: 0.875rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: var(--color-surface);
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--color-bone);
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.025);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.field::placeholder {
+  color: var(--color-fog);
+}
+
+.field:focus {
+  border-color: rgba(196, 95, 63, 0.65);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.02),
+    0 0 0 4px rgba(196, 95, 63, 0.13),
+    0 2px 10px rgba(196, 95, 63, 0.08);
+}
+
+select.field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6b70' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  padding-right: 2.25rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #cf6b47 0%, #bc5536 100%);
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(196, 95, 63, 0.25);
+  transition:
+    transform 0.18s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.25s ease,
+    filter 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 8px 20px rgba(196, 95, 63, 0.32);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  background: var(--color-surface);
+  padding: 0.375rem 1rem;
+  font-size: 0.75rem;
+  color: var(--color-bone);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.18s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.25s ease;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-ghost:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.btn-ghost:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.spinner {
+  height: 0.875rem;
+  width: 0.875rem;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner-light {
+  border-color: rgba(0, 0, 0, 0.12);
+  border-top-color: var(--color-ember);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Segmented nav with sliding indicator ──────────────────────────── */
+
+.seg-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.055);
+  background: rgba(0, 0, 0, 0.042);
+  padding: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.045);
+}
+
+.seg-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+  transition:
+    left 0.38s cubic-bezier(0.3, 1.25, 0.45, 1),
+    width 0.38s cubic-bezier(0.3, 1.25, 0.45, 1);
+  will-change: left, width;
+}
+
+.seg-btn {
+  position: relative;
+  z-index: 1;
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-fog);
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+
+.seg-btn:hover {
+  color: var(--color-bone);
+}
+
+.seg-btn[data-active='true'] {
+  color: var(--color-bone);
+}
+
+/* ── Motion ────────────────────────────────────────────────────────── */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+/* staggered reveal — children cascade in */
+.stagger > * {
+  opacity: 0;
+  animation: fade-up 0.55s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger > *:nth-child(2) { animation-delay: 0.07s; }
+.stagger > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger > *:nth-child(4) { animation-delay: 0.17s; }
+.stagger > *:nth-child(5) { animation-delay: 0.22s; }
+.stagger > *:nth-child(6) { animation-delay: 0.27s; }
+.stagger > *:nth-child(7) { animation-delay: 0.32s; }
+.stagger > *:nth-child(8) { animation-delay: 0.37s; }
+.stagger > *:nth-child(9) { animation-delay: 0.42s; }
+.stagger > *:nth-child(10) { animation-delay: 0.47s; }
+.stagger > *:nth-child(11) { animation-delay: 0.52s; }
+.stagger > *:nth-child(n + 12) { animation-delay: 0.57s; }
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-sheet-in {
+  animation: sheet-in 0.5s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-backdrop-in {
+  animation: backdrop-in 0.3s ease both;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.3s cubic-bezier(0.3, 1.3, 0.45, 1) both;
+}
+
+@keyframes check-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-check-pop {
+  animation: check-pop 0.45s cubic-bezier(0.3, 1.3, 0.45, 1) both;
+}
+
+@keyframes pulse-ember {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.animate-pulse-ember {
+  animation: pulse-ember 1.6s ease-in-out infinite;
+}
+
+/* soft expanding halo around the active pipeline node */
+@keyframes halo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(196, 95, 63, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 0 9px rgba(196, 95, 63, 0);
+  }
+}
+
+.animate-halo {
+  animation: halo 1.6s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
+/* shimmer for thinking states */
+@keyframes shimmer {
+  from {
+    background-position: 200% 50%;
+  }
+  to {
+    background-position: -200% 50%;
+  }
+}
+
+.shimmer-bar {
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 95, 63, 0.1) 25%,
+    rgba(196, 95, 63, 0.45) 50%,
+    rgba(196, 95, 63, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #6b6b70 30%, #1d1d1f 50%, #6b6b70 70%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 2.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-sheet-in,
+  .animate-backdrop-in,
+  .animate-pop-in,
+  .animate-check-pop,
+  .animate-halo,
+  .stagger > * {
+    animation: none;
+    opacity: 1;
+  }
+  .seg-indicator {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Wooden-wall intro ─────────────────────────────────────────────── */
+
+.wood-wall {
+  background-image:
+    /* spotlight + vignette: lit center, deep falloff to the dark stage edges */
+    radial-gradient(
+      ellipse 88% 72% at 50% 40%,
+      rgba(255, 228, 188, 0.3) 0%,
+      rgba(0, 0, 0, 0) 46%,
+      rgba(0, 0, 0, 0.42) 82%,
+      rgba(0, 0, 0, 0.62) 100%
+    ),
+    /* real wood fibre — fractal noise stretched into vertical grain */
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='300'%20height='760'%3E%3Cfilter%20id='w'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.011%200.085'%20numOctaves='5'%20seed='14'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0%200%200%200%200.18%200%200%200%200%200.1%200%200%200%200%200.04%200.85%200%200%200%200'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23w)'/%3E%3C/svg%3E"),
+    /* plank seams: deep groove + a light catch on the next board's edge */
+    repeating-linear-gradient(
+      90deg,
+      rgba(12, 6, 2, 0.62) 0px,
+      rgba(12, 6, 2, 0.62) 2px,
+      rgba(255, 238, 210, 0.14) 2px,
+      rgba(255, 238, 210, 0.14) 4px,
+      transparent 4px,
+      transparent 108px,
+      rgba(0, 0, 0, 0.34) 108px,
+      rgba(0, 0, 0, 0.34) 112px
+    ),
+    /* per-plank tone variation on an irregular rhythm */
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 216, 168, 0.08) 0px,
+      rgba(58, 34, 16, 0.12) 61px,
+      rgba(255, 216, 168, 0.05) 133px,
+      rgba(40, 24, 12, 0.14) 187px,
+      rgba(255, 216, 168, 0.08) 224px
+    ),
+    /* warm oak base, lit from above */
+    linear-gradient(180deg, #b58e62 0%, #a9835656 0%, #a98356 34%, #936c47 64%, #75573a 100%);
+  background-size: cover, 300px 760px, auto, auto, auto;
+  background-repeat: no-repeat, repeat, repeat, repeat, no-repeat;
+  background-color: #8a6845;
+}
+
+.wood-plaque {
+  border-radius: 6px;
+  background: rgba(18, 9, 3, 0.12);
+  box-shadow:
+    inset 0 4px 10px rgba(12, 6, 2, 0.72),
+    inset 0 -3px 7px rgba(255, 232, 196, 0.16),
+    0 1px 0 rgba(255, 236, 206, 0.32),
+    0 -1px 1px rgba(18, 10, 4, 0.6),
+    0 26px 60px rgba(0, 0, 0, 0.55);
+}
+
+.wood-engraved {
+  color: #6a4f30;
+  text-shadow:
+    0 -2px 2px rgba(12, 6, 2, 0.88),
+    0 -4px 7px rgba(12, 6, 2, 0.4),
+    0 2px 1px rgba(255, 234, 198, 0.42);
+}
+
+.wood-ring {
+  border: 2px solid rgba(64, 44, 24, 0.5);
+  box-shadow:
+    inset 0 2px 4px rgba(12, 6, 2, 0.6),
+    inset 0 -2px 3px rgba(255, 232, 196, 0.2),
+    0 1px 0 rgba(255, 236, 206, 0.22);
+}
+
+.intro-frame {
+  border: 2px solid rgba(234, 198, 142, 0.82);
+  border-radius: 52px;
+  box-shadow:
+    0 0 24px rgba(236, 186, 116, 0.45),
+    0 0 3px rgba(255, 229, 176, 0.92),
+    inset 0 0 20px rgba(236, 186, 116, 0.3);
+}
+
+.intro-door {
+  transition: transform 2s cubic-bezier(0.62, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.intro-veil {
+  transition: opacity 1.4s ease;
+}
+
+@keyframes intro-mark-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.intro-mark {
+  animation: intro-mark-in 1.3s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s both;
+}

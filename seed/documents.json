@@ -1,0 +1,218 @@
+[
+  {
+    "id": "doc-f1-lpa",
+    "fund_id": "fund-1",
+    "type": "lpa",
+    "status": "closed",
+    "title": "Amended and Restated Limited Partnership Agreement of Vulcan Industrial Partners, L.P. (2018)",
+    "provisions": [
+      {
+        "id": "p-f1-geo",
+        "topic": "geographic",
+        "heading": "Section 2.4 — Geographic Restrictions",
+        "text": "The Partnership shall invest primarily in industrial businesses whose principal operations are located in North America and Western Europe. The Partnership shall not, without the prior written consent of the Advisory Board, invest more than 15% of aggregate Commitments in Portfolio Companies whose principal operations are located outside North America and Western Europe."
+      },
+      {
+        "id": "p-f1-keyperson",
+        "topic": "key_person",
+        "heading": "Section 4.7 — Key Person Event",
+        "text": "If at any time during the Investment Period fewer than two of the Principals devote substantially all of their business time to the affairs of the Partnership, the General Partner shall notify the Limited Partners within ten (10) Business Days of becoming aware of such circumstance and the Investment Period shall be suspended pending the affirmative vote of Limited Partners holding at least 60% of aggregate Commitments."
+      },
+      {
+        "id": "p-f1-reporting",
+        "topic": "reporting",
+        "heading": "Section 9.1 — Reports",
+        "text": "The General Partner shall deliver to each Limited Partner audited annual financial statements within ninety (90) days after the end of each fiscal year and unaudited quarterly reports within forty-five (45) days after the end of each of the first three fiscal quarters."
+      },
+      {
+        "id": "p-f1-transfer",
+        "topic": "transfer",
+        "heading": "Section 10.2 — Transfers",
+        "text": "No Limited Partner may sell, assign or otherwise transfer its interest in the Partnership without the prior written consent of the General Partner, which consent may be granted or withheld in the General Partner's sole discretion. Any purported transfer in violation of this Section shall be void."
+      },
+      {
+        "id": "p-f1-coinvest",
+        "topic": "co_invest",
+        "heading": "Section 6.3 — Co-Investment",
+        "text": "Co-investment opportunities shall be offered to Limited Partners whose Commitments equal or exceed $50,000,000, allocated pro rata to Commitments unless the General Partner reasonably determines that timing or regulatory constraints require a different allocation."
+      }
+    ]
+  },
+  {
+    "id": "doc-f2-lpa",
+    "fund_id": "fund-2",
+    "type": "lpa",
+    "status": "closed",
+    "title": "Amended and Restated Limited Partnership Agreement of Vulcan Industrial Partners II, L.P. (2021)",
+    "provisions": [
+      {
+        "id": "p-f2-geo",
+        "topic": "geographic",
+        "heading": "Section 2.4 — Geographic Restrictions",
+        "text": "The Partnership shall invest primarily in industrial and infrastructure-adjacent businesses whose principal operations are located in North America and Europe. Investments in Portfolio Companies whose principal operations are located in Emerging Markets shall not exceed 20% of aggregate Commitments, and any single such investment in excess of $100,000,000 shall require the prior written consent of the Advisory Board."
+      },
+      {
+        "id": "p-f2-excuse",
+        "topic": "excuse",
+        "heading": "Section 5.6 — Excused Investments",
+        "text": "A Limited Partner that has identified a category of excused investments in its Side Letter shall be excused from participation in any Portfolio Investment falling within such category, and the General Partner shall deliver written notice of any proposed investment in an excused category to each affected Limited Partner no fewer than fifteen (15) Business Days prior to the closing of such investment."
+      },
+      {
+        "id": "p-f2-mfn",
+        "topic": "mfn",
+        "heading": "Section 13.9 — Most Favored Nations",
+        "text": "The General Partner shall deliver to each Limited Partner whose Commitment equals or exceeds $75,000,000 an annual compendium of side letter provisions granted to other Limited Partners, and each such Limited Partner shall be entitled to elect the benefit of any disclosed provision within thirty (30) days of receipt of the compendium."
+      },
+      {
+        "id": "p-f2-reporting",
+        "topic": "reporting",
+        "heading": "Section 9.1 — Reports",
+        "text": "The General Partner shall deliver to each Limited Partner audited annual financial statements within ninety (90) days after the end of each fiscal year and unaudited quarterly reports within forty-five (45) days after the end of each of the first three fiscal quarters, in each case including a schedule of Portfolio Investments and a statement of fees and expenses."
+      },
+      {
+        "id": "p-f2-keyperson",
+        "topic": "key_person",
+        "heading": "Section 4.7 — Key Person Event",
+        "text": "If at any time during the Investment Period fewer than three of the Key Persons devote substantially all of their business time to the affairs of the Partnership and its parallel vehicles, the General Partner shall notify the Limited Partners within ten (10) Business Days and the Investment Period shall be automatically suspended pending the affirmative vote of Limited Partners holding at least 66 2/3% of aggregate Commitments."
+      },
+      {
+        "id": "p-f2-fees",
+        "topic": "fees",
+        "heading": "Section 7.1 — Management Fee",
+        "text": "During the Investment Period the management fee shall equal 2.0% per annum of aggregate Commitments, stepping down thereafter to 1.5% per annum of invested capital. The General Partner shall deliver to each Limited Partner an annual statement of fees, expenses and offsets within sixty (60) days after the end of each fiscal year."
+      }
+    ]
+  },
+  {
+    "id": "doc-sl-norrland",
+    "fund_id": "fund-2",
+    "type": "side_letter",
+    "status": "closed",
+    "investor_id": "inv-norrland",
+    "title": "Side Letter — Norrland Pension AB (Vulcan Industrial Partners II, L.P., 2021)",
+    "agreed_terms": ["jurisdiction excusal", "advance notice of excused investments", "annual ESG report"],
+    "provisions": [
+      {
+        "id": "p-sl-norr-1",
+        "topic": "excuse",
+        "heading": "Paragraph 1 — Jurisdiction Excusal",
+        "text": "Norrland Pension AB shall be excused from participation in any Portfolio Investment in a Portfolio Company whose principal operations are located in a jurisdiction that is subject to European Union restrictive measures or that is rated below investment grade by at least two internationally recognized rating agencies, including for the avoidance of doubt any jurisdiction in sub-Saharan Africa so rated."
+      },
+      {
+        "id": "p-sl-norr-2",
+        "topic": "notice",
+        "heading": "Paragraph 2 — Advance Notice",
+        "text": "The General Partner shall deliver written notice of any proposed Portfolio Investment in a jurisdiction described in Paragraph 1 to Norrland Pension AB no fewer than fifteen (15) Business Days prior to the closing of such investment, identifying the jurisdiction, the proposed enterprise value and the basis on which the excusal does or does not apply."
+      },
+      {
+        "id": "p-sl-norr-3",
+        "topic": "reporting",
+        "heading": "Paragraph 3 — ESG Reporting",
+        "text": "The General Partner shall deliver to Norrland Pension AB an annual environmental, social and governance report substantially in the form of the Invest Europe ESG reporting template within one hundred twenty (120) days after the end of each fiscal year."
+      }
+    ]
+  },
+  {
+    "id": "doc-sl-edfc",
+    "fund_id": "fund-2",
+    "type": "side_letter",
+    "status": "closed",
+    "investor_id": "inv-edfc",
+    "title": "Side Letter — Equatorial Development Finance Corporation (Vulcan Industrial Partners II, L.P., 2021)",
+    "agreed_terms": ["development impact reporting", "anti-corruption certification", "excluded sectors"],
+    "provisions": [
+      {
+        "id": "p-sl-edfc-1",
+        "topic": "reporting",
+        "heading": "Paragraph 1 — Development Impact Reporting",
+        "text": "With respect to any Portfolio Investment in a Portfolio Company whose principal operations are located in sub-Saharan Africa, the General Partner shall deliver to Equatorial Development Finance Corporation a development-impact and environmental and social report no later than forty-five (45) days after the closing of such investment, and annually thereafter for so long as the investment is held."
+      },
+      {
+        "id": "p-sl-edfc-2",
+        "topic": "reporting",
+        "heading": "Paragraph 2 — Anti-Corruption Certification",
+        "text": "The General Partner shall certify to Equatorial Development Finance Corporation annually, within ninety (90) days after the end of each fiscal year, that the Partnership and each Portfolio Company maintain policies reasonably designed to ensure compliance with applicable anti-bribery and anti-corruption laws."
+      },
+      {
+        "id": "p-sl-edfc-3",
+        "topic": "investment_restriction",
+        "heading": "Paragraph 3 — Excluded Sectors",
+        "text": "The Commitment of Equatorial Development Finance Corporation shall not be drawn for any Portfolio Investment in a Portfolio Company that derives more than ten percent (10%) of its revenue from defense materiel, tobacco products or thermal coal extraction."
+      }
+    ]
+  },
+  {
+    "id": "doc-sl-hokuriku",
+    "fund_id": "fund-1",
+    "type": "side_letter",
+    "status": "closed",
+    "investor_id": "inv-hokuriku",
+    "title": "Side Letter — Hokuriku Mutual Life Insurance Company (Vulcan Industrial Partners, L.P., 2018)",
+    "agreed_terms": ["currency exposure reporting", "affiliate transfer consent", "mfn election"],
+    "provisions": [
+      {
+        "id": "p-sl-hoku-1",
+        "topic": "reporting",
+        "heading": "Paragraph 1 — Currency Exposure Reporting",
+        "text": "The General Partner shall deliver to Hokuriku Mutual Life Insurance Company a quarterly statement of the Partnership's unhedged non-USD currency exposure within thirty (30) days after the end of each fiscal quarter."
+      },
+      {
+        "id": "p-sl-hoku-2",
+        "topic": "transfer",
+        "heading": "Paragraph 2 — Affiliate Transfers",
+        "text": "Notwithstanding Section 10.2 of the Agreement, the General Partner consents in advance to any transfer by Hokuriku Mutual Life Insurance Company of all or part of its interest to a wholly-owned Affiliate, provided such Affiliate satisfies applicable legal and regulatory requirements and assumes the transferring partner's obligations in writing."
+      },
+      {
+        "id": "p-sl-hoku-3",
+        "topic": "mfn",
+        "heading": "Paragraph 3 — Most Favored Nations",
+        "text": "Hokuriku Mutual Life Insurance Company shall be entitled to elect the benefit of any provision granted in any other side letter relating to this fund, excluding provisions particular to the legal, tax or regulatory circumstances of the recipient, within thirty (30) days of receipt of the side letter compendium."
+      }
+    ]
+  },
+  {
+    "id": "doc-f3-draft",
+    "fund_id": "fund-3",
+    "type": "lpa",
+    "status": "draft",
+    "title": "Limited Partnership Agreement of Vulcan Industrial Partners III, L.P. — Working Draft",
+    "provisions": [
+      {
+        "id": "p-f3-geo",
+        "topic": "geographic",
+        "heading": "Section 2.4 — Geographic Restrictions",
+        "text": "The Partnership shall invest primarily in industrial businesses whose principal operations are located in North America and Europe. The Partnership shall not invest more than 15% of aggregate Commitments in Portfolio Companies whose principal operations are located outside North America and Europe, and any single such investment in excess of $150,000,000 shall require the prior written consent of the Advisory Board."
+      },
+      {
+        "id": "p-f3-fees",
+        "topic": "fees",
+        "heading": "Section 7.1 — Management Fee",
+        "text": "During the Investment Period the management fee shall equal 2.0% per annum of aggregate Commitments, payable semi-annually in advance, stepping down upon expiration of the Investment Period to 1.5% per annum of invested capital. One hundred percent (100%) of transaction, monitoring and directors' fees shall offset the management fee."
+      },
+      {
+        "id": "p-f3-mfn",
+        "topic": "mfn",
+        "heading": "Section 13.9 — Most Favored Nations",
+        "text": "The General Partner shall deliver to each Limited Partner whose Commitment equals or exceeds $75,000,000 an annual compendium of side letter provisions granted to other Limited Partners, and each such Limited Partner shall be entitled to elect the benefit of any disclosed provision within thirty (30) days of receipt."
+      },
+      {
+        "id": "p-f3-coinvest",
+        "topic": "co_invest",
+        "heading": "Section 6.3 — Co-Investment",
+        "text": "Co-investment opportunities shall be offered to Limited Partners whose Commitments equal or exceed $75,000,000, allocated pro rata to Commitments unless the General Partner reasonably determines that strategic considerations, timing or regulatory constraints require a different allocation. No carried interest or management fee shall be charged on co-investment capital."
+      },
+      {
+        "id": "p-f3-reporting",
+        "topic": "reporting",
+        "heading": "Section 9.1 — Reports",
+        "text": "The General Partner shall deliver to each Limited Partner audited annual financial statements within ninety (90) days after the end of each fiscal year and unaudited quarterly reports within forty-five (45) days after the end of each of the first three fiscal quarters."
+      },
+      {
+        "id": "p-f3-keyperson",
+        "topic": "key_person",
+        "heading": "Section 4.7 — Key Person Event",
+        "text": "If at any time during the Investment Period fewer than three of the Key Persons devote substantially all of their business time to the affairs of the Partnership, the General Partner shall notify the Limited Partners within ten (10) Business Days and the Investment Period shall be automatically suspended pending the affirmative vote of Limited Partners holding at least 66 2/3% of aggregate Commitments."
+      }
+    ]
+  }
+]
