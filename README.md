@@ -1,11 +1,36 @@
 # Forge — a fund formation engine
 
+**Forge is a local-first AI fund-formation engine — drafting, negotiation,
+side letters, and a decade of obligations — where every answer is quoted
+verbatim from your own documents and every client name is masked on-device
+before anything leaves the machine, so a lawyer can actually trust it.**
+
 > "The idea is that we're going to take the collective intelligence of our
 > institution and be able to deploy that throughout our firm."
 
-A fun-but-real homage to the Kirkland & Ellis / Palantir "Fund Formation
-Engine", built local-first: a frontier model for the reasoning, a local model
-on the lawyer's own machine for everything confidential.
+It's a working homage to the Kirkland & Ellis / Palantir "Fund Formation
+Engine" — the whole private-equity fundraising lifecycle — built around the
+two things their platform conspicuously doesn't show publicly:
+
+1. **Verified citations, not trust.** Every AI assertion is quoted verbatim
+   and machine-checked against the source document on file. A green ✓ means
+   the words are really there; a red ✗ means they aren't, and the engine
+   never hides which. (The same FT article we started from is framed by two
+   firms sanctioned for AI hallucinations.)
+2. **Provable confidentiality, not a promise.** Names are masked on the
+   lawyer's own machine before any frontier call; a panel shows the exact
+   sanitized payload; matters live in separate encrypted files.
+
+### Why local-first
+
+Fund formation runs on the most sensitive data a firm holds — LP identities,
+commitment sizes, bespoke side-letter economics — under ethical-wall and
+client-confidence duties. "Send it to a cloud AI" is where compliance review
+ends. So the sensitive layer (the raw names, the documents, retrieval, the
+database) stays on the machine, and **only name-masked, sanitized text ever
+crosses the boundary** to the frontier model. Local-*first*, not local-only:
+you get frontier-grade reasoning without surrendering the confidential data
+to get it. That hybrid is the whole bet.
 
 Fictional client: **Vulcan Industrial Partners** (named for the Roman god of
 the forge), raising Fund III — $3B, 14 investors. Not legal advice; not a
@@ -122,21 +147,38 @@ npm run eval      # the honesty check: extraction recall/precision against
 
 ```
 src/
-  config.ts            env-backed configuration
-  documents/parser.ts  parse uploaded PDF/DOCX/MD/TXT → citable provisions
-  engine/intake.ts     create an engagement + ingest your own documents
-  db/                  SQLite ontology: funds → investors → documents →
-                       provisions → comments → side_letters → obligations,
-                       ai_calls audit, embeddings; FTS5 + sync triggers
-  privacy/anonymize.ts reversible placeholder anonymizer (regex, local)
-  ai/ollama.ts         local model client (NER chat + embeddings + health)
-  ai/gateway.ts        the privacy gateway — nothing leaves unsanitized
-  ai/claude.ts         the ONE place Fable 5 is called: sanitize → call →
-                       de-anonymize → verify citations → audit
-  search/              hybrid retrieval (BM25 + cosine, degrades to BM25)
-  engine/              the five stages + citation verifier + run progress
-  api/routes.ts        REST + SSE
-  seed/seed.ts         loads seed/ (the fictional Vulcan corpus)
-web/                   React 19 + Vite + Tailwind 4 dashboard
-scripts/smoke.ts       end-to-end smoke test
+  config.ts             env-backed configuration
+  db/                   SQLite ontology: funds → investors → documents →
+                        provisions → comments → side_letters → obligations,
+                        precedents, ai_calls audit, embeddings; FTS5 + triggers
+  workspaces/           matter workspaces — one encrypted SQLite file per matter
+                        (the ethical wall); lock/unlock with AES-256-GCM
+  privacy/anonymize.ts  reversible placeholder anonymizer (regex, local)
+  ai/ollama.ts          local model client (NER chat + embeddings + health)
+  ai/gateway.ts         the privacy gateway — nothing leaves unsanitized
+  ai/claude.ts          the ONE place Fable 5 is called: sanitize → call →
+                        de-anonymize → verify citations → audit
+  search/               hybrid retrieval (BM25 + cosine, degrades to BM25)
+  documents/parser.ts   parse uploaded PDF/DOCX/MD/TXT → citable provisions
+  documents/ocr.ts      on-device OCR fallback for scanned PDFs (pdf.js + Tesseract)
+  engine/
+    intake.ts           create a matter + ingest your own documents
+    obligations.ts      extraction + plain-English Q&A over the register
+    drafting.ts         the four-role drafting pipeline (SSE progress)
+    changes.ts          mid-raise term-change assessment
+    comments.ts         investor-comment triage + suggested responses
+    side-letters.ts     three-way side-letter drafting
+    mfn.ts              MFN compendium (eligibility, electability, deadline)
+    deadlines.ts        deterministic due dates, event planner, reminder emails, ICS
+    precedent.ts        the compounding loop — weighted house precedent
+    citations.ts        verbatim citation verifier (the trust core)
+    progress.ts         in-memory run registry → SSE
+  export/docx.ts        Word-native deliverables with a verified Sources annex
+  api/routes.ts         REST + SSE
+  seed/seed.ts          loads seed/ (the fictional Vulcan corpus)
+  eval/score.ts         recall/precision scorer for the eval harness
+web/                    React 19 + Vite + Tailwind 4 dashboard
+scripts/smoke.ts        end-to-end smoke test
+scripts/eval.ts         recall eval runner (see Verify above)
+eval/                   hand-labeled documents + Q&A ground truth
 ```

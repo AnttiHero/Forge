@@ -11,6 +11,14 @@ confidential. Two principles are load-bearing; keep them intact:
    that are checked verbatim against the source (`src/engine/citations.ts`).
    If you add a generative feature, give it a citation schema and let the
    verifier mark it.
+3. **Matters are walled off.** Each matter is its own SQLite file
+   (`src/workspaces/`); the active one is the process-wide `getDb()`. A
+   query can't span two matters by construction — don't add one that reaches
+   across files. Long async work (uploads, the drafting pipeline) must be
+   bracketed with `withDbOp(...)` so a workspace switch mid-operation is
+   refused cleanly instead of closing the handle out from under it.
+
+See the **Layout** section of the README for where each module lives.
 
 ## Getting started
 
