@@ -125,6 +125,13 @@ The **"What left your machine"** panel shows the exact sanitized payload of
 every frontier call. When Ollama is down, everything degrades gracefully:
 regex-only anonymization, keyword-only search, a visible badge.
 
+**Be precise about the promise.** What's masked is *names* — fund, investor,
+and (via NER) other parties. The legal text itself, including amounts and
+dates, is sent in clear: that is what makes verbatim citation verification
+possible. Third-party names inside uploaded documents are protected by the
+local NER pass only — when Ollama is down, names the ontology doesn't know
+travel unmasked, and the UI badge says so.
+
 **Citations are enforced, not requested.** Every AI assertion must quote its
 source; quotes are verified verbatim (whitespace-normalized) against the
 ontology after de-anonymization. Unverified citations are flagged in the UI.

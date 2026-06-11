@@ -67,16 +67,25 @@ export interface RunEnd {
 
 export function subscribeRun(runId: string, onEvent: (e: RunEvent) => void, onEnd: (e: RunEnd) => void): () => void {
   const source = new EventSource(`${BASE}/runs/${runId}/events`);
+  let ended = false;
   source.onmessage = (msg) => {
     const data = JSON.parse(msg.data) as RunEvent | RunEnd;
     if ('type' in data && data.type === 'end') {
+      ended = true;
       onEnd(data);
       source.close();
     } else {
       onEvent(data as RunEvent);
     }
   };
-  source.onerror = () => source.close();
+  // a dropped stream must surface as an error, not an eternal spinner
+  source.onerror = () => {
+    if (source.readyState === EventSource.CLOSED && !ended) {
+      ended = true;
+      onEnd({ type: 'end', status: 'error', error: 'Lost connection to the pipeline stream — check the run under Drafting or retry.' });
+    }
+    if (source.readyState === EventSource.CLOSED) source.close();
+  };
   return () => source.close();
 }
 

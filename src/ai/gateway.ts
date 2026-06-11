@@ -43,6 +43,11 @@ export function resetGateway(): void {
   runRegistries.clear();
 }
 
+/** How many run registries are alive (tests — leak detection). */
+export function activeRunCount(): number {
+  return runRegistries.size;
+}
+
 export function getRegistry(runId?: string): AnonymizationRegistry {
   if (!runId) return createRegistry();
   let reg = runRegistries.get(runId);

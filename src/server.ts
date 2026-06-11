@@ -38,6 +38,15 @@ if (fs.existsSync(webDist)) {
 activateOnBoot(); // open the active matter workspace (falls back to demo if locked)
 getDb();
 
+const LOOPBACK = new Set(['127.0.0.1', 'localhost', '::1']);
+if (!LOOPBACK.has(config.host)) {
+  app.log.warn(
+    `FORGE_HOST=${config.host} binds beyond loopback. Forge has NO authentication — every matter, document and API ` +
+      `action becomes available to anyone who can reach this machine on port ${config.port}. Only do this behind a ` +
+      `firewall or reverse proxy that adds auth.`,
+  );
+}
+
 try {
   await app.listen({ port: config.port, host: config.host });
   const counts = getDb().prepare(`SELECT (SELECT COUNT(*) FROM funds) AS funds, (SELECT COUNT(*) FROM obligations) AS obligations`).get() as {

@@ -43,7 +43,17 @@ export async function renderPdfPages(buffer: Buffer, maxPages = MAX_PAGES): Prom
   const pages = Math.min(doc.numPages, maxPages);
   for (let i = 1; i <= pages; i++) {
     const page = await doc.getPage(i);
-    const viewport = page.getViewport({ scale: RENDER_SCALE });
+    let viewport = page.getViewport({ scale: RENDER_SCALE });
+    // a crafted (or just unusual) PDF can declare an enormous page box —
+    // clamp the render target so one page can't demand gigabytes of canvas
+    const MAX_DIM = 4_000;
+    const MAX_PIXELS = 12_000_000;
+    const shrink = Math.min(
+      1,
+      MAX_DIM / Math.max(viewport.width, viewport.height),
+      Math.sqrt(MAX_PIXELS / (viewport.width * viewport.height)),
+    );
+    if (shrink < 1) viewport = page.getViewport({ scale: RENDER_SCALE * shrink });
     const canvas = canvasMod.createCanvas(Math.ceil(viewport.width), Math.ceil(viewport.height));
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#ffffff';

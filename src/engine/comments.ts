@@ -202,6 +202,8 @@ const atomizeSchema = z.object({
 export interface IngestedComments {
   count: number;
   topics: string[];
+  /** comments already in the queue verbatim — re-pasting a mark-up is safe */
+  skippedDuplicates: number;
 }
 
 /**
@@ -239,13 +241,24 @@ export async function ingestComments(opts: {
   const insert = db.prepare(
     `INSERT INTO comments (id, fund_id, investor_id, provision_topic, text, status) VALUES (?, ?, ?, ?, ?, 'open')`,
   );
+  const dupCheck = db.prepare(
+    `SELECT 1 FROM comments WHERE fund_id = ? AND investor_id = ? AND text = ?`,
+  );
   const topics = new Set<string>();
+  let inserted = 0;
+  let skipped = 0;
   db.transaction(() => {
     for (const c of result.data.comments) {
+      // re-pasting the same mark-up must not double the triage queue
+      if (dupCheck.get(opts.fundId, investor.id, c.text)) {
+        skipped += 1;
+        continue;
+      }
       insert.run(genId('c'), opts.fundId, investor.id, c.provisionTopic, c.text);
       topics.add(c.provisionTopic);
+      inserted += 1;
     }
   })();
 
-  return { count: result.data.comments.length, topics: [...topics] };
+  return { count: inserted, topics: [...topics], skippedDuplicates: skipped };
 }

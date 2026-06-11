@@ -136,6 +136,18 @@ export function registerRoutes(app: FastifyInstance): void {
     async (req, reply) => {
       const name = req.body?.name?.trim();
       if (!name) return reply.code(400).send({ error: 'name required' });
+      const INVESTOR_TYPES = ['pension', 'swf', 'endowment', 'insurer', 'fund_of_funds', 'family_office', 'dfi', 'other'];
+      const type = req.body.type?.trim() || 'other';
+      if (!INVESTOR_TYPES.includes(type)) {
+        return reply.code(400).send({ error: `type must be one of: ${INVESTOR_TYPES.join(', ')}` });
+      }
+      if (req.body.commitmentUsd !== undefined && (!Number.isFinite(req.body.commitmentUsd) || req.body.commitmentUsd < 0)) {
+        return reply.code(400).send({ error: 'commitmentUsd must be a non-negative number' });
+      }
+      if (req.body.fundId) {
+        const fund = getDb().prepare(`SELECT id FROM funds WHERE id = ?`).get(req.body.fundId);
+        if (!fund) return reply.code(400).send({ error: 'unknown fundId' });
+      }
       const db = getDb();
       const existing = db.prepare(`SELECT id FROM investors WHERE lower(name) = lower(?)`).get(name);
       if (existing) return reply.code(409).send({ error: 'investor already exists', id: (existing as { id: string }).id });
@@ -145,7 +157,7 @@ export function registerRoutes(app: FastifyInstance): void {
           db.prepare(`INSERT INTO investors (id, name, type, jurisdiction) VALUES (?, ?, ?, ?)`).run(
             id,
             name,
-            req.body.type?.trim() || 'other',
+            type,
             req.body.jurisdiction?.trim() || '',
           );
           if (req.body.fundId) {

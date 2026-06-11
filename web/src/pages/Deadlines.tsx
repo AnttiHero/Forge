@@ -113,12 +113,22 @@ export function Deadlines() {
   }, []);
 
   useEffect(() => {
+    let stale = false;
     const params = new URLSearchParams();
     if (fundId) params.set('fundId', fundId);
     params.set('withinDays', String(withinDays));
     get<{ deadlines: Deadline[] }>(`/deadlines?${params}`)
-      .then((r) => setDeadlines(r.deadlines))
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)));
+      .then((r) => {
+        if (stale) return;
+        setDeadlines(r.deadlines);
+        setError(null);
+      })
+      .catch((e) => {
+        if (!stale) setError(e instanceof Error ? e.message : String(e));
+      });
+    return () => {
+      stale = true;
+    };
   }, [fundId, withinDays]);
 
   const runPlan = async () => {

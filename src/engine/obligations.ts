@@ -12,6 +12,7 @@
 import { z } from 'zod';
 import { getDb, genId } from '../db/db.js';
 import { callStructured } from '../ai/claude.js';
+import { releaseRun } from '../ai/gateway.js';
 import { citationSchema, quoteAppearsIn } from './citations.js';
 import { hybridSearch } from '../search/hybrid.js';
 import { embedAll } from '../search/embeddings.js';
@@ -168,7 +169,19 @@ export type ObligationAnswer = z.infer<typeof answerSchema> & {
 export async function answerObligationQuery(question: string, fundId?: string): Promise<ObligationAnswer> {
   const db = getDb();
   const runId = genId('run');
+  try {
+    return await answerWithRun(db, question, runId, fundId);
+  } finally {
+    releaseRun(runId); // the per-run mapping registry must not outlive the request
+  }
+}
 
+async function answerWithRun(
+  db: ReturnType<typeof getDb>,
+  question: string,
+  runId: string,
+  fundId?: string,
+): Promise<ObligationAnswer> {
   // Step 1: derive structured filters (small call)
   const filters = await callStructured({
     stage: 'obligations.filters',

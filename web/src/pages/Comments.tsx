@@ -26,7 +26,7 @@ export function Comments() {
   const [ingestInvestorId, setIngestInvestorId] = useState('');
   const [ingestText, setIngestText] = useState('');
   const [ingestBusy, setIngestBusy] = useState(false);
-  const [ingested, setIngested] = useState<{ count: number; topics: string[] } | null>(null);
+  const [ingested, setIngested] = useState<{ count: number; topics: string[]; skippedDuplicates: number } | null>(null);
 
   const load = useCallback(
     () => get<Record<string, Comment[]>>(`/comments?fundId=${fundId}`).then(setGrouped).catch(() => {}),
@@ -76,7 +76,7 @@ export function Comments() {
     setError(null);
     setIngested(null);
     try {
-      const r = await post<{ count: number; topics: string[] }>('/comments', {
+      const r = await post<{ count: number; topics: string[]; skippedDuplicates: number }>('/comments', {
         fundId,
         investorId: ingestInvestorId,
         text: ingestText,
@@ -144,8 +144,11 @@ export function Comments() {
         {ingestBusy && <ThinkingCard label="Splitting the mark-up into deal points" />}
         {ingested && (
           <p className="animate-fade-up mt-3 text-xs text-verdant">
-            ✓ {ingested.count} comment{ingested.count === 1 ? '' : 's'} added across {ingested.topics.length} deal point
-            {ingested.topics.length === 1 ? '' : 's'}: {ingested.topics.map((t) => t.replace(/_/g, ' ')).join(', ')}
+            ✓ {ingested.count} comment{ingested.count === 1 ? '' : 's'} added
+            {ingested.topics.length > 0
+              ? ` across ${ingested.topics.length} deal point${ingested.topics.length === 1 ? '' : 's'}: ${ingested.topics.map((t) => t.replace(/_/g, ' ')).join(', ')}`
+              : ''}
+            {ingested.skippedDuplicates > 0 ? ` — ${ingested.skippedDuplicates} already in the queue, skipped` : ''}
           </p>
         )}
       </div>

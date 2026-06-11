@@ -382,8 +382,14 @@ export function PrivacyPanel({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <p className="mb-6 max-w-md text-sm leading-relaxed text-fog">
-          Every frontier call, with the exact sanitized payload. Names are replaced on-device before anything is sent;{' '}
-          <mark className="rounded bg-ember/15 px-0.5 text-ember">placeholders</mark> are restored locally on the way back.
+          Every frontier call, with the exact sanitized payload. Fund and investor names are replaced on-device before anything is
+          sent; <mark className="rounded bg-ember/15 px-0.5 text-ember">placeholders</mark> are restored locally on the way back.
+        </p>
+        <p className="mb-6 max-w-md rounded-xl border border-black/[0.07] bg-black/[0.025] px-4 py-3 text-xs leading-relaxed text-fog">
+          What this does <span className="font-semibold text-bone">not</span> mask: the legal text itself — amounts, dates, clause
+          language — travels in clear, because that's what makes verbatim citations checkable. Names the ontology doesn't know
+          (counterparties, individuals inside documents) are caught by the local model's NER pass when it's running; the badge
+          above goes amber when it isn't.
         </p>
         {selected ? (
           <div className="animate-fade-up">
