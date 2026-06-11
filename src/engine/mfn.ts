@@ -52,6 +52,9 @@ export interface CompendiumData {
   basis: MfnBasis | null;
   provisions: SideLetterProvision[];
   electors: Elector[];
+  /** The MFN clause has a monetary eligibility test the parser could not
+   *  read — electors are unknown, NOT "everyone". */
+  thresholdUnparsed: boolean;
 }
 
 const WORD_NUMBERS: Record<string, number> = {
@@ -77,11 +80,12 @@ export function parseThresholdUsd(clause: string): number | null {
 }
 
 export function parseWindowDays(clause: string): number | null {
-  const numeric = clause.match(/within\s+[\w\- ]*\((\d+)\)\s+days/i);
+  // "days" may be qualified: "Business Days", "calendar days"
+  const numeric = clause.match(/within\s+[\w\- ]*\((\d+)\)\s+(?:business\s+|calendar\s+)?days/i);
   if (numeric) return Number.parseInt(numeric[1], 10);
-  const bare = clause.match(/within\s+(\d+)\s+days/i);
+  const bare = clause.match(/within\s+(\d+)\s+(?:business\s+|calendar\s+)?days/i);
   if (bare) return Number.parseInt(bare[1], 10);
-  const word = clause.match(/within\s+([a-z\-]+)\s+days/i);
+  const word = clause.match(/within\s+([a-z\-]+)\s+(?:business\s+|calendar\s+)?days/i);
   if (word) return WORD_NUMBERS[word[1].toLowerCase()] ?? null;
   return null;
 }
@@ -147,17 +151,24 @@ export function assembleCompendiumData(db: Database.Database, fundId: string): C
     )
     .all(fundId) as SideLetterProvision[];
 
+  // A clause that mentions money but defeated the parser must NOT default
+  // to threshold 0 — that would silently declare every LP eligible.
+  const thresholdUnparsed = Boolean(
+    basis && basis.thresholdUsd === null && /\$|\bmillion\b|\bbillion\b/i.test(basis.sourceClause),
+  );
   const threshold = basis?.thresholdUsd ?? 0;
-  const electors = db
-    .prepare(
-      `SELECT i.id AS investorId, i.name, i.type, i.jurisdiction, c.amount_usd AS commitmentUsd
-       FROM commitments c JOIN investors i ON i.id = c.investor_id
-       WHERE c.fund_id = ? AND c.amount_usd >= ?
-       ORDER BY c.amount_usd DESC`,
-    )
-    .all(fundId, threshold) as Elector[];
+  const electors = thresholdUnparsed
+    ? []
+    : (db
+        .prepare(
+          `SELECT i.id AS investorId, i.name, i.type, i.jurisdiction, c.amount_usd AS commitmentUsd
+           FROM commitments c JOIN investors i ON i.id = c.investor_id
+           WHERE c.fund_id = ? AND c.amount_usd >= ?
+           ORDER BY c.amount_usd DESC`,
+        )
+        .all(fundId, threshold) as Elector[]);
 
-  return { fundId, fundName: fund.name, basis, provisions, electors };
+  return { fundId, fundName: fund.name, basis, provisions, electors, thresholdUnparsed };
 }
 
 // ── Classification (the one frontier call) ───────────────────────────────
@@ -193,6 +204,7 @@ export interface Compendium {
   electors: Elector[];
   entries: CompendiumEntry[];
   citationsVerified: { total: number; verified: number };
+  thresholdUnparsed: boolean;
 }
 
 export async function buildCompendium(
@@ -254,5 +266,6 @@ export async function buildCompendium(
     electors: data.electors,
     entries,
     citationsVerified: result.citations,
+    thresholdUnparsed: data.thresholdUnparsed,
   };
 }

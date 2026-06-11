@@ -58,11 +58,12 @@ describe('hybrid search', () => {
   });
 
   it('blends keyword and semantic scores (ordering)', async () => {
-    // Both match keywords; vector pushes obl-02 above obl-01
+    // Both rows contain "Portfolio Investment" (equal keyword footing);
+    // the vector pushes obl-02 above obl-01
     storeEmbedding(db, 'obligation', 'obl-01', [0, 1, 0]);
     storeEmbedding(db, 'obligation', 'obl-02', [1, 0, 0]);
     const hits = await hybridSearch(db, {
-      query: 'sub-Saharan Africa',
+      query: 'Portfolio Investment',
       table: 'obligations',
       topK: 5,
       queryVector: [1, 0, 0],

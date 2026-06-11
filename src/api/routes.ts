@@ -236,7 +236,7 @@ export function registerRoutes(app: FastifyInstance): void {
     async (req, reply) => {
       if (!req.body?.feedback) return reply.code(400).send({ error: 'feedback required' });
       try {
-        return await integrateFeedback(req.params.id, req.body.feedback);
+        return await withDbOp(() => integrateFeedback(req.params.id, req.body.feedback));
       } catch (err) {
         return reply.code(400).send({ error: errMessage(err) });
       }
@@ -248,7 +248,7 @@ export function registerRoutes(app: FastifyInstance): void {
     const { provisionId, changeRequest } = req.body ?? ({} as { provisionId: string; changeRequest: string });
     if (!provisionId || !changeRequest) return reply.code(400).send({ error: 'provisionId and changeRequest required' });
     try {
-      return await assessChange(provisionId, changeRequest);
+      return await withDbOp(() => assessChange(provisionId, changeRequest));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }
@@ -262,7 +262,7 @@ export function registerRoutes(app: FastifyInstance): void {
 
   app.post<{ Params: { id: string } }>('/api/comments/:id/suggest', async (req, reply) => {
     try {
-      return await suggestResolution(req.params.id);
+      return await withDbOp(() => suggestResolution(req.params.id));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }
@@ -274,7 +274,7 @@ export function registerRoutes(app: FastifyInstance): void {
       const action = req.body?.action;
       if (action !== 'accept' && action !== 'edit') return reply.code(400).send({ error: 'action must be accept or edit' });
       try {
-        await resolveComment(req.params.id, action, req.body?.text);
+        await withDbOp(() => resolveComment(req.params.id, action, req.body?.text));
         return { ok: true };
       } catch (err) {
         return reply.code(400).send({ error: errMessage(err) });
@@ -291,7 +291,7 @@ export function registerRoutes(app: FastifyInstance): void {
         return reply.code(400).send({ error: 'fundId, investorId and non-empty agreedTerms required' });
       }
       try {
-        return await generateSideLetterDrafts({ fundId, investorId, agreedTerms });
+        return await withDbOp(() => generateSideLetterDrafts({ fundId, investorId, agreedTerms }));
       } catch (err) {
         return reply.code(400).send({ error: errMessage(err) });
       }
@@ -321,7 +321,7 @@ export function registerRoutes(app: FastifyInstance): void {
     const { fundId, investorId, text } = req.body ?? ({} as { fundId: string; investorId: string; text: string });
     if (!fundId || !investorId || !text) return reply.code(400).send({ error: 'fundId, investorId and text required' });
     try {
-      return await ingestComments({ fundId, investorId, text });
+      return await withDbOp(() => ingestComments({ fundId, investorId, text }));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }
@@ -359,7 +359,7 @@ export function registerRoutes(app: FastifyInstance): void {
   // ── Stage 5: obligations ───────────────────────────────────────────
   app.post<{ Params: { documentId: string } }>('/api/obligations/extract/:documentId', async (req, reply) => {
     try {
-      return await extractObligations(req.params.documentId);
+      return await withDbOp(() => extractObligations(req.params.documentId));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }
@@ -368,7 +368,7 @@ export function registerRoutes(app: FastifyInstance): void {
   app.post<{ Body: { question: string; fundId?: string } }>('/api/obligations/ask', async (req, reply) => {
     if (!req.body?.question) return reply.code(400).send({ error: 'question required' });
     try {
-      return await answerObligationQuery(req.body.question, req.body.fundId);
+      return await withDbOp(() => answerObligationQuery(req.body.question, req.body.fundId));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }
@@ -389,7 +389,7 @@ export function registerRoutes(app: FastifyInstance): void {
       const { eventDescription, eventDate, fundId } = req.body ?? ({} as { eventDescription: string; eventDate: string; fundId?: string });
       if (!eventDescription || !eventDate) return reply.code(400).send({ error: 'eventDescription and eventDate required' });
       try {
-        return await planEvent(getDb(), { eventDescription, eventDate, fundId });
+        return await withDbOp(() => planEvent(getDb(), { eventDescription, eventDate, fundId }));
       } catch (err) {
         return reply.code(400).send({ error: errMessage(err) });
       }
@@ -401,11 +401,13 @@ export function registerRoutes(app: FastifyInstance): void {
     async (req, reply) => {
       if (!req.body?.obligationId) return reply.code(400).send({ error: 'obligationId required' });
       try {
-        return await draftReminderEmail(req.body.obligationId, {
-          dueDate: req.body.dueDate,
-          periodLabel: req.body.periodLabel,
-          eventDescription: req.body.eventDescription,
-        });
+        return await withDbOp(() =>
+          draftReminderEmail(req.body.obligationId, {
+            dueDate: req.body.dueDate,
+            periodLabel: req.body.periodLabel,
+            eventDescription: req.body.eventDescription,
+          }),
+        );
       } catch (err) {
         return reply.code(400).send({ error: errMessage(err) });
       }
@@ -431,7 +433,7 @@ export function registerRoutes(app: FastifyInstance): void {
   app.post<{ Body: { fundId: string; deliveryDate?: string } }>('/api/mfn/compendium', async (req, reply) => {
     if (!req.body?.fundId) return reply.code(400).send({ error: 'fundId required' });
     try {
-      return await buildCompendium(getDb(), { fundId: req.body.fundId, deliveryDate: req.body.deliveryDate });
+      return await withDbOp(() => buildCompendium(getDb(), { fundId: req.body.fundId, deliveryDate: req.body.deliveryDate }));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }

@@ -11,6 +11,7 @@ interface Compendium {
   deliveryDate: string | null;
   electionDeadline: string | null;
   electors: Array<{ investorId: string; name: string; type: string; commitmentUsd: number }>;
+  thresholdUnparsed?: boolean;
   entries: Array<{
     provisionId: string;
     granteeName: string;
@@ -125,6 +126,12 @@ export function Mfn() {
                 </div>
               </div>
             </div>
+            {result.thresholdUnparsed && (
+              <p className="mt-4 rounded-xl border border-warn/25 bg-warn/[0.06] px-4 py-2.5 text-xs leading-relaxed text-warn">
+                The MFN clause sets a monetary eligibility test that couldn't be read automatically — eligible electors are{' '}
+                <span className="font-semibold">unknown</span>, not zero. Read the basis clause above and determine eligibility by hand.
+              </p>
+            )}
             <div className="mt-5 flex flex-wrap gap-2">
               {result.electors.map((e) => (
                 <span key={e.investorId} className="rounded-full border border-black/[0.09] bg-black/[0.03] px-3 py-1 text-xs">

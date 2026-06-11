@@ -103,6 +103,22 @@ describe('the closed lifecycle: execute → record → compendium', () => {
     expect(data.provisions.some((p) => p.granteeName === 'Khalij Investment Authority' && /25 basis points/.test(p.text))).toBe(true);
   });
 
+  it('executing the same draft twice reuses the filed letter instead of duplicating (sweep #6)', async () => {
+    const draft = {
+      label: 'model_language',
+      clauses: [{ term: 'Reporting', tier: 'model_language', text: 'Quarterly reports within sixty (60) days of quarter end.' }],
+    };
+    const first = await executeSideLetter(db, { fundId: 'fund-2', investorId: 'inv-norrland', draft, extract: false });
+    const second = await executeSideLetter(db, { fundId: 'fund-2', investorId: 'inv-norrland', draft, extract: false });
+    expect(second.documentId).toBe(first.documentId);
+    expect(second.sideLetterId).toBe(first.sideLetterId);
+    const docs = db
+      .prepare(`SELECT COUNT(*) AS n FROM documents WHERE fund_id = 'fund-2' AND investor_id = 'inv-norrland' AND type = 'side_letter'`)
+      .get() as { n: number };
+    // exactly one new document beyond the seeded Norrland letter
+    expect(docs.n).toBe(2);
+  });
+
   it('resolveOrCreateInvestor fuzzy-matches before creating', () => {
     const matched = resolveOrCreateInvestor(db, 'Norrland');
     expect(matched.id).toBe('inv-norrland');

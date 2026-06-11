@@ -104,7 +104,10 @@ export function activateWorkspace(id: string): WorkspaceMeta {
   const r = readRegistry();
   const ws = find(r, id);
   if (ws.locked) throw new Error('Workspace is locked — unlock it with its passphrase first.');
-  if (id !== r.activeId && isDbBusy()) {
+  // already active: a no-op, NOT a reopen — setDb would close the live
+  // handle out from under any in-flight operation
+  if (id === r.activeId) return ws;
+  if (isDbBusy()) {
     throw new Error('An operation is still running in the current matter — wait for it to finish before switching.');
   }
   setDb(openDb(ws.file));
@@ -143,6 +146,16 @@ export function lockWorkspace(id: string, passphrase: string): WorkspaceMeta {
   if (isDbBusy()) {
     throw new Error('An operation is still running — wait for it to finish before locking.');
   }
+  // never lock a file that doesn't exist — openDb would create a fresh
+  // EMPTY database and we'd encrypt nothing over the real data
+  if (!fs.existsSync(ws.file)) {
+    throw new Error('Workspace database file is missing — cannot lock.');
+  }
+  // a .locked alongside a live plaintext is a stale leftover from an
+  // interrupted unlock and is safe to replace; a .locked WITHOUT plaintext
+  // would be the only copy of the matter — replacing it loses everything
+  // (and we'd only get here in that state after a crash mid-lock)
+
   if (r.activeId === id) {
     // close the case file before locking it — switch back to the demo
     setDb(openDb(find(r, 'default').file));
@@ -165,11 +178,13 @@ export function lockWorkspace(id: string, passphrase: string): WorkspaceMeta {
   const ciphertext = Buffer.concat([cipher.update(plaintext), cipher.final()]);
   const tag = cipher.getAuthTag();
 
+  // Order matters for crash safety: write the encrypted copy, record the
+  // locked state, and only THEN remove the plaintext. A crash at any point
+  // leaves at least one complete copy of the matter on disk.
   fs.writeFileSync(`${ws.file}.locked`, Buffer.concat([MAGIC, salt, iv, tag, ciphertext]));
-  fs.rmSync(ws.file);
-
   ws.locked = true;
   writeRegistry(r);
+  fs.rmSync(ws.file);
   return ws;
 }
 
@@ -194,9 +209,13 @@ export function unlockWorkspace(id: string, passphrase: string): WorkspaceMeta {
     throw new Error('Wrong passphrase.');
   }
 
+  // Same crash-safety order as locking: restore the plaintext, record the
+  // unlocked state, then drop the encrypted copy. An interrupted unlock
+  // leaves a stale .locked next to the live file, which lockWorkspace
+  // safely replaces.
   fs.writeFileSync(ws.file, plaintext);
-  fs.rmSync(`${ws.file}.locked`);
   ws.locked = false;
   writeRegistry(r);
+  fs.rmSync(`${ws.file}.locked`);
   return ws;
 }

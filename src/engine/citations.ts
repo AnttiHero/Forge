@@ -130,12 +130,18 @@ export function quoteAppearsIn(source: string, quote: string, mappings?: EntityM
   // wildcard-match any source mentioning that party — reject it
   if (meaningfulLength(nq) < MIN_MEANINGFUL) return false;
   // strict pass: entity slots must match by IDENTITY
-  if (normalize(source, mappings, 'identity').includes(nq)) return true;
+  const ns = normalize(source, mappings, 'identity');
+  if (ns.includes(nq)) return true;
   // fallback: only when the quote carries a placeholder the mapping can't
-  // resolve (model invented/renumbered beyond the map) — compare with all
-  // slots generic, the pre-identity behavior
+  // resolve (model invented/renumbered beyond the map). ONLY that slot
+  // becomes a wildcard — every resolvable entity still has to match by
+  // identity, so one invented token can't launder a wrong-party quote.
   if (nq.includes(GENERIC_SLOT)) {
-    return normalize(source, mappings, 'generic').includes(normalize(quote, mappings, 'generic'));
+    const pattern = nq
+      .split(' ')
+      .map((w) => (w === GENERIC_SLOT ? '(?:xslotx|xe[0-9a-f]{10}x)' : escapeRe(w)))
+      .join(' ');
+    return new RegExp(pattern).test(ns);
   }
   return false;
 }

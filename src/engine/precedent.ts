@@ -101,10 +101,13 @@ export async function searchPrecedents(
       const rows = db
         .prepare(
           `SELECT p.*, rank FROM precedents_fts f JOIN precedents p ON p.rowid = f.rowid
-           WHERE precedents_fts MATCH ? ${opts.topic ? 'AND p.topic = ?' : ''} LIMIT ?`,
+           WHERE precedents_fts MATCH ? ${opts.topic ? 'AND p.topic = ?' : ''} ORDER BY rank LIMIT ?`,
         )
         .all(...(opts.topic ? [ftsQuery, opts.topic, topK * 4] : [ftsQuery, topK * 4])) as Array<Precedent & { rank: number }>;
-      for (const r of rows) candidates.set(r.id, { row: r, relevance: 1 / (1 + Math.abs(r.rank)) });
+      // FTS5 bm25 rank is NEGATIVE and more negative = better — normalize
+      // within the result set so the strongest match scores 1.0
+      const maxAbs = rows.reduce((m, r) => Math.max(m, Math.abs(r.rank)), 0) || 1;
+      for (const r of rows) candidates.set(r.id, { row: r, relevance: Math.abs(r.rank) / maxAbs });
     } catch {
       /* fts syntax — fall through to semantic leg */
     }

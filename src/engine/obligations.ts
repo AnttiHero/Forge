@@ -196,8 +196,12 @@ export async function answerObligationQuery(question: string, fundId?: string): 
     where.push(`(o.geography IS NOT NULL AND (LOWER(o.geography) LIKE ? OR LOWER(?) LIKE '%' || LOWER(o.geography) || '%'))`);
     params.push(`%${filters.data.geography.toLowerCase()}%`, filters.data.geography);
   }
+  // The SQL leg is only worth running when the model extracted a semantic
+  // filter (type/geography); fundId alone would select the whole register
+  // and flood out the ranked search hits below.
+  const hasSemanticFilter = filters.data.types.length > 0 || Boolean(filters.data.geography);
   const sqlRows =
-    where.length > 0
+    hasSemanticFilter && where.length > 0
       ? (db.prepare(`SELECT o.id FROM obligations o WHERE ${where.join(' AND ')}`).all(...params) as Array<{ id: string }>)
       : [];
 
@@ -208,7 +212,9 @@ export async function answerObligationQuery(question: string, fundId?: string): 
     topK: 8,
   });
 
-  const ids = [...new Set([...sqlRows.map((r) => r.id), ...hits.map((h) => h.id)])].slice(0, 14);
+  // ranked search hits enter first so the unranked SQL leg can never
+  // crowd them out of the 14-record window
+  const ids = [...new Set([...hits.map((h) => h.id), ...sqlRows.map((r) => r.id)])].slice(0, 14);
   const totalOnFile = (
     db
       .prepare(`SELECT COUNT(*) AS n FROM obligations o ${fundId ? 'WHERE o.fund_id = ?' : ''}`)

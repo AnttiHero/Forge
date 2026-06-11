@@ -141,6 +141,33 @@ export async function executeSideLetter(
   const title = `Side Letter — ${investor.name} (${fund.name})`;
   const content = [title, '', ...opts.draft.clauses.flatMap((c, i) => [`Paragraph ${i + 1} — ${c.term}`, '', c.text, ''])].join('\n');
 
+  // Idempotent on retry: if this exact letter is already on file (a prior
+  // attempt that failed after the commit, or a double click), reuse it —
+  // finishing the obligation extraction if that's the part that died.
+  const existing = db
+    .prepare(
+      `SELECT d.id AS documentId, s.id AS sideLetterId FROM documents d
+       JOIN side_letters s ON s.document_id = d.id
+       WHERE d.fund_id = ? AND d.investor_id = ? AND d.type = 'side_letter' AND d.content = ?`,
+    )
+    .get(opts.fundId, opts.investorId, content) as { documentId: string; sideLetterId: string } | undefined;
+  if (existing) {
+    let obligations: ExtractedObligation[] = [];
+    const haveObligations = (
+      db.prepare(`SELECT COUNT(*) AS n FROM obligations WHERE source_document_id = ?`).get(existing.documentId) as { n: number }
+    ).n;
+    if (opts.extract !== false && haveObligations === 0) {
+      obligations = (await extractObligations(existing.documentId)).obligations;
+    }
+    return {
+      documentId: existing.documentId,
+      sideLetterId: existing.sideLetterId,
+      title,
+      provisionCount: opts.draft.clauses.length,
+      obligations,
+    };
+  }
+
   const insertDoc = db.prepare(
     `INSERT INTO documents (id, fund_id, type, status, investor_id, title, content) VALUES (?, ?, 'side_letter', 'closed', ?, ?, ?)`,
   );

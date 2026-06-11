@@ -91,4 +91,40 @@ describe('matter workspaces (ethical walls)', () => {
     activateWorkspace('default');
     expect(() => lockWorkspace('default', 'whatever')).toThrow(/demo/i);
   });
+
+  it('re-activating the active workspace is a no-op, not a handle churn (sweep #9)', () => {
+    activateWorkspace('default');
+    const ws = createWorkspace('Sticky Matter');
+    activateWorkspace(ws.id);
+    const handle = getDb();
+    activateWorkspace(ws.id); // again — must not close/reopen
+    expect(getDb()).toBe(handle);
+    expect(() => handle.prepare('SELECT 1').get()).not.toThrow();
+  });
+
+  it('refuses to lock when the database file is missing instead of encrypting an empty one (sweep #10)', () => {
+    activateWorkspace('default');
+    const ws = createWorkspace('Ghost Matter');
+    fs.rmSync(ws.file);
+    expect(() => lockWorkspace(ws.id, 'passphrase')).toThrow(/missing/i);
+  });
+
+  it('an interrupted unlock leaves a stale .locked that relocking safely replaces (sweep #10)', () => {
+    activateWorkspace('default');
+    const ws = createWorkspace('Resilient Matter');
+    activateWorkspace(ws.id);
+    getDb()
+      .prepare(`INSERT INTO funds (id, name, numeral, target_size_usd, status, vintage) VALUES ('f-r', 'Real Data', 1, 1, 'forming', 2026)`)
+      .run();
+    lockWorkspace(ws.id, 'first-pass');
+    unlockWorkspace(ws.id, 'first-pass');
+    // simulate the crash window: plaintext restored, registry unlocked, but
+    // the old .locked never got removed
+    fs.copyFileSync(ws.file, `${ws.file}.stale`);
+    lockWorkspace(ws.id, 'second-pass'); // must replace, not refuse or lose data
+    unlockWorkspace(ws.id, 'second-pass');
+    activateWorkspace(ws.id);
+    expect(getDb().prepare(`SELECT name FROM funds WHERE id = 'f-r'`).get()).toEqual({ name: 'Real Data' });
+    fs.rmSync(`${ws.file}.stale`);
+  });
 });

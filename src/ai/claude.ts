@@ -15,7 +15,7 @@ import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import type { z } from 'zod';
 import { config } from '../config.js';
 import { getDb, genId } from '../db/db.js';
-import { sanitizeOutbound, restoreInbound } from './gateway.js';
+import { sanitizeOutbound, restoreInbound, releaseRun } from './gateway.js';
 import { verifyCitationsDeep } from '../engine/citations.js';
 import type { EntityMapping } from '../privacy/anonymize.js';
 
@@ -33,6 +33,9 @@ export interface CallOptions<T> {
   /** Scope name-masking to one matter's fund + committed investors. Omit
    *  for cross-fund calls (e.g. the obligations register). */
   scopeFundId?: string;
+  /** Names that must be masked even if the scoped ontology query misses
+   *  them (e.g. an investor not yet committed to the fund). */
+  protectNames?: string[];
 }
 
 export interface CallResult<T> {
@@ -67,9 +70,28 @@ export async function callStructured<T>(opts: CallOptions<T>): Promise<CallResul
   const started = Date.now();
   const auditId = genId('call');
 
-  // 1. Nothing leaves the machine un-sanitized.
-  const { sanitized, mappings, stats, nerUsed } = await sanitizeOutbound(opts.user, opts.runId, opts.scopeFundId);
-  const system = `${opts.system}\n\nNote: bracketed tokens like [INVESTOR_1] in the input are protected references. Reproduce them exactly as written wherever you refer to that entity — never alter, renumber, or invent such tokens.`;
+  // 1. Nothing leaves the machine un-sanitized — the SYSTEM prompt included
+  //    (call sites interpolate fund/investor names into it). Both prompts
+  //    sanitize against one shared registry so placeholders agree; the
+  //    registry is released afterwards unless the caller owns the run.
+  const runId = opts.runId ?? genId('xrun');
+  let sanitized: string;
+  let system: string;
+  let mappings: EntityMapping[];
+  let stats: Record<string, number>;
+  let nerUsed: boolean;
+  try {
+    const sys = await sanitizeOutbound(opts.system, runId, opts.scopeFundId, opts.protectNames);
+    const usr = await sanitizeOutbound(opts.user, runId, opts.scopeFundId, opts.protectNames);
+    sanitized = usr.sanitized;
+    mappings = usr.mappings; // same registry — includes the system prompt's entities
+    stats = usr.stats;
+    nerUsed = usr.nerUsed || sys.nerUsed;
+    system = `${sys.sanitized}\n\nNote: bracketed tokens like [INVESTOR_1] in the input are protected references. Reproduce them exactly as written wherever you refer to that entity — never alter, renumber, or invent such tokens.`;
+  } catch (err) {
+    if (!opts.runId) releaseRun(runId);
+    throw err;
+  }
   const sanitizedPrompt = `SYSTEM:\n${system}\n\nUSER:\n${sanitized}`;
 
   const writeAudit = (ok: boolean, inputTokens: number, outputTokens: number): void => {
@@ -123,5 +145,7 @@ export async function callStructured<T>(opts: CallOptions<T>): Promise<CallResul
   } catch (err) {
     writeAudit(false, 0, 0);
     throw err;
+  } finally {
+    if (!opts.runId) releaseRun(runId);
   }
 }

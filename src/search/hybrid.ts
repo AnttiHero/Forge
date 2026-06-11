@@ -187,8 +187,12 @@ export async function hybridSearch(db: Database.Database, opts: SearchOptions): 
     for (const row of fetchByIds(db, opts, semanticTop)) candidates.set(row.id, row);
   }
 
+  // FTS5 bm25 rank is NEGATIVE and more negative = better — normalize by
+  // the strongest match so the best keyword hit scores 1.0 (rank 0 means
+  // "no bm25 signal": LIKE-fallback rows get 0.5, semantic-only rows 0)
+  const maxAbsRank = keywordHits.reduce((m, r) => Math.max(m, Math.abs(r.rank)), 0) || 1;
   const hits: SearchHit[] = [...candidates.values()].map((row) => {
-    const bm25 = row.rank !== 0 ? 1 / (1 + Math.abs(row.rank)) : keywordHits.some((k) => k.id === row.id) ? 0.5 : 0;
+    const bm25 = row.rank !== 0 ? Math.abs(row.rank) / maxAbsRank : keywordHits.some((k) => k.id === row.id) ? 0.5 : 0;
     const cos = cosineById.has(row.id) ? cosineById.get(row.id)! : null;
     const score = cos !== null ? 0.5 * bm25 + 0.5 * cos : bm25;
     return { id: row.id, heading: row.heading, text: row.text, documentId: row.documentId, bm25, cosine: cos, score };

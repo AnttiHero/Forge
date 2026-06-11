@@ -225,6 +225,9 @@ export async function ingestComments(opts: {
   const result = await callStructured({
     stage: 'comments.ingest',
     scopeFundId: opts.fundId,
+    // the comments aren't inserted yet, so the scoped term query can't see
+    // this investor — name it explicitly
+    protectNames: [investor.name],
     system:
       "Atomize investor counsel's mark-up into individual deal-point comments for a fund negotiation tracker. One entry per distinct point; keep the substance faithful (do not soften or editorialize); classify each to its deal-point topic. Skip pleasantries and process emails.",
     user: opts.text,

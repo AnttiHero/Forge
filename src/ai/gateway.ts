@@ -112,9 +112,18 @@ function confidentialTerms(scopeFundId?: string): TypedTerm[] {
   if (scopeFundId) {
     const fund = db.prepare('SELECT name FROM funds WHERE id = ?').get(scopeFundId) as { name: string } | undefined;
     if (fund) add(fund.name, 'fund');
+    // every investor the matter touches — commitments alone misses BYO LPs
+    // whose documents/comments arrived before (or without) a commitment row
     const investors = db
-      .prepare('SELECT i.name FROM investors i JOIN commitments c ON c.investor_id = i.id WHERE c.fund_id = ?')
-      .all(scopeFundId) as Array<{ name: string }>;
+      .prepare(
+        `SELECT name FROM investors WHERE id IN (
+           SELECT investor_id FROM commitments WHERE fund_id = ?
+           UNION SELECT investor_id FROM documents WHERE fund_id = ? AND investor_id IS NOT NULL
+           UNION SELECT investor_id FROM comments WHERE fund_id = ?
+           UNION SELECT investor_id FROM side_letters WHERE fund_id = ?
+         )`,
+      )
+      .all(scopeFundId, scopeFundId, scopeFundId, scopeFundId) as Array<{ name: string }>;
     for (const i of investors) add(i.name, 'investor');
     return terms;
   }
@@ -137,9 +146,22 @@ interface NerCandidate {
 /**
  * Sanitize text before it leaves the machine.
  */
-export async function sanitizeOutbound(text: string, runId?: string, scopeFundId?: string): Promise<SanitizeResult> {
+export async function sanitizeOutbound(
+  text: string,
+  runId?: string,
+  scopeFundId?: string,
+  protectNames?: string[],
+): Promise<SanitizeResult> {
   const registry = getRegistry(runId);
   const terms = confidentialTerms(scopeFundId);
+  // Caller-supplied names (e.g. an LP not yet linked to the fund by any
+  // table) get the same treatment as ontology terms, aliases included
+  for (const name of protectNames ?? []) {
+    const trimmed = name.trim();
+    if (trimmed.length < 3) continue;
+    terms.push({ term: trimmed, type: 'investor' });
+    for (const alias of aliasesFor(trimmed)) terms.push({ term: alias, type: 'investor' });
+  }
   // Previously-seen originals must keep mapping in new text
   for (const m of registry.mappings) {
     if (m.type === 'fund' || m.type === 'investor' || m.type === 'party') {
