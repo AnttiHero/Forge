@@ -15,6 +15,7 @@ import { openDb, setDb } from '../db/db.js';
 import { seedDatabase } from '../seed/seed.js';
 import { extractObligations, answerObligationQuery } from './obligations.js';
 import { ingestComments } from './comments.js';
+import { askHelper } from './helper.js';
 import { setAnthropicClient } from '../ai/claude.js';
 import { resetGateway, activeRunCount } from '../ai/gateway.js';
 import { resetHealthCache } from '../ai/ollama.js';
@@ -167,6 +168,33 @@ describe('frontier paths, end to end with a mocked client', () => {
 
     // the per-run mapping registry must not outlive the request
     expect(activeRunCount()).toBe(0);
+  });
+
+  it('Cassie: masked snapshot, valid tab routing, live numbers from the file', async () => {
+    const seen = installFakeClient([
+      {
+        match: /You are Cassie/,
+        output: () => ({
+          answer: 'Upload it under Documents and every duty in it will be checked word-for-word.',
+          suggestedTab: 'intake',
+          followUps: ['How do I link it to an investor?'],
+        }),
+      },
+    ]);
+
+    const reply = await askHelper({ question: 'Where do I add my own contract?' });
+
+    // her prompt carries the live practice snapshot, so it MUST be masked
+    expect(seen.length).toBe(1);
+    const outbound = `${seen[0].system}\n${seen[0].messages[0].content}`;
+    expect(outbound).not.toContain('Norrland');
+    expect(outbound).not.toContain('Hokuriku');
+    expect(outbound).toContain('PRACTICE SNAPSHOT'); // the live numbers really went along
+    expect(outbound).toMatch(/obligations on the register: \d+/);
+
+    expect(reply.suggestedTab).toBe('intake');
+    expect(reply.suggestedTabLabel).toBe('Documents');
+    expect(reply.followUps).toHaveLength(1);
   });
 
   it('re-ingesting the same mark-up does not duplicate the triage queue', async () => {

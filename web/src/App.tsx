@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { get, type Fund } from './api.js';
 import { FundContext } from './fund-context.js';
+import { Helper } from './Helper.js';
 import { Intro, shouldPlayIntro } from './Intro.js';
 import { PrivacyButton, PrivacyPanel, WorkspaceSwitcher, EngineKeyBanner } from './components.js';
 import { Ontology } from './pages/Ontology.js';
@@ -204,6 +205,8 @@ export default function App() {
       <footer className="mx-auto max-w-6xl px-6 pb-10 pt-6 text-xs leading-relaxed text-fog/70">
         Forge, a fund formation engine. Fictional client: Vulcan Industrial Partners. Not legal advice; a homage built for fun.
       </footer>
+
+      <Helper onNavigate={setTab} />
 
       {privacyOpen && <PrivacyPanel onClose={() => setPrivacyOpen(false)} />}
     </div>

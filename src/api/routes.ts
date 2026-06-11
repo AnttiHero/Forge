@@ -15,6 +15,7 @@ import { startDraftingPipeline, integrateFeedback } from '../engine/drafting.js'
 import { createMatter, ingestDocument } from '../engine/intake.js';
 import { computeUpcomingDeadlines, deadlinesToICS, draftReminderEmail, planEvent } from '../engine/deadlines.js';
 import { listPrecedents } from '../engine/precedent.js';
+import { askHelper, type HelperTurn } from '../engine/helper.js';
 import { verifyCitationsDeep } from '../engine/citations.js';
 import { buildCompendium } from '../engine/mfn.js';
 import { mfnCompendiumDocx, sideLettersDocx } from '../export/docx.js';
@@ -334,6 +335,21 @@ export function registerRoutes(app: FastifyInstance): void {
     if (!fundId || !investorId || !text) return reply.code(400).send({ error: 'fundId, investorId and text required' });
     try {
       return await withDbOp(() => ingestComments({ fundId, investorId, text }));
+    } catch (err) {
+      return reply.code(400).send({ error: errMessage(err) });
+    }
+  });
+
+  // ── Cassie, the in-app guide ───────────────────────────────────────
+  app.post<{ Body: { question: string; history?: HelperTurn[] } }>('/api/helper', async (req, reply) => {
+    if (!req.body?.question?.trim()) return reply.code(400).send({ error: 'question required' });
+    const history = Array.isArray(req.body.history)
+      ? req.body.history
+          .filter((t) => (t?.role === 'user' || t?.role === 'cassie') && typeof t?.text === 'string')
+          .slice(-8)
+      : [];
+    try {
+      return await withDbOp(() => askHelper({ question: req.body.question, history }));
     } catch (err) {
       return reply.code(400).send({ error: errMessage(err) });
     }
