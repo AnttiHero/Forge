@@ -69,12 +69,13 @@ html {
 
 .card {
   border-radius: 1.25rem;
-  border: 1px solid rgba(0, 0, 0, 0.065);
+  border: 1px solid rgba(0, 0, 0, 0.07);
   background: var(--color-surface);
   box-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.025),
-    0 2px 6px rgba(0, 0, 0, 0.035),
-    0 12px 32px rgba(0, 0, 0, 0.055);
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 1px rgba(27, 26, 24, 0.03),
+    0 3px 8px rgba(27, 26, 24, 0.05),
+    0 16px 40px rgba(27, 26, 24, 0.07);
   transition:
     border-color 0.3s ease,
     transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
@@ -82,33 +83,41 @@ html {
 }
 
 .card-hover:hover {
-  border-color: rgba(0, 0, 0, 0.11);
-  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.04),
-    0 8px 18px rgba(0, 0, 0, 0.06),
-    0 28px 64px rgba(0, 0, 0, 0.11);
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 4px rgba(27, 26, 24, 0.05),
+    0 12px 28px rgba(27, 26, 24, 0.09),
+    0 40px 90px rgba(27, 26, 24, 0.14);
+}
+
+.card-hover:active {
+  transform: translateY(-1px) scale(0.995);
+  transition-duration: 0.12s;
 }
 
 /* hero-tier card — for the answer, the thing the user came for */
 .card-elevated {
   border-radius: 1.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  background: linear-gradient(180deg, #ffffff 0%, #fffdfb 100%);
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  background: linear-gradient(180deg, #ffffff 0%, #fdfcfa 100%);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.03),
-    0 6px 16px rgba(0, 0, 0, 0.05),
-    0 24px 60px rgba(0, 0, 0, 0.09),
-    0 48px 120px rgba(125, 47, 63, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(27, 26, 24, 0.04),
+    0 8px 20px rgba(27, 26, 24, 0.06),
+    0 32px 80px rgba(27, 26, 24, 0.12),
+    0 64px 160px rgba(125, 47, 63, 0.07);
 }
 
 .glass {
   /* the filter lives in a custom property so the minifier can't mangle the
      space between blur() and saturate() (which invalidates the declaration) */
-  --glass-filter: blur(28px) saturate(1.7);
-  background: rgba(250, 249, 246, 0.72);
+  --glass-filter: blur(36px) saturate(1.9);
+  background: rgba(244, 243, 239, 0.68);
+  /* unprefixed only: the minifier merges a standard+webkit pair down to
+     the webkit alias alone, which Chromium then refuses to apply */
   backdrop-filter: var(--glass-filter);
-  -webkit-backdrop-filter: var(--glass-filter);
 }
 
 .hairline-b {
@@ -119,7 +128,8 @@ html {
 .header-elevated {
   box-shadow:
     0 1px 0 rgba(0, 0, 0, 0.05),
-    0 8px 28px rgba(0, 0, 0, 0.07);
+    0 12px 32px rgba(27, 26, 24, 0.08),
+    0 32px 80px rgba(27, 26, 24, 0.06);
 }
 
 /* ── Controls ──────────────────────────────────────────────────────── */
@@ -150,8 +160,8 @@ html {
   border-color: rgba(125, 47, 63, 0.65);
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.02),
-    0 0 0 4px rgba(125, 47, 63, 0.13),
-    0 2px 10px rgba(125, 47, 63, 0.08);
+    0 0 0 4px rgba(125, 47, 63, 0.14),
+    0 4px 16px rgba(125, 47, 63, 0.12);
 }
 
 select.field {
@@ -175,9 +185,10 @@ select.field {
   font-weight: 500;
   letter-spacing: -0.01em;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 1px 2px rgba(0, 0, 0, 0.12),
-    0 4px 12px rgba(125, 47, 63, 0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(27, 26, 24, 0.14),
+    0 6px 16px rgba(125, 47, 63, 0.3);
   transition:
     transform 0.18s cubic-bezier(0.32, 0.72, 0, 1),
     box-shadow 0.25s ease,
@@ -189,9 +200,10 @@ select.field {
   filter: brightness(1.05);
   transform: translateY(-1px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 2px 4px rgba(0, 0, 0, 0.12),
-    0 8px 20px rgba(125, 47, 63, 0.32);
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 2px 5px rgba(27, 26, 24, 0.14),
+    0 12px 28px rgba(125, 47, 63, 0.4);
 }
 
 .btn:active:not(:disabled) {
@@ -227,7 +239,9 @@ select.field {
 .btn-ghost:hover:not(:disabled) {
   border-color: rgba(0, 0, 0, 0.22);
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 2px 5px rgba(27, 26, 24, 0.06),
+    0 8px 20px rgba(27, 26, 24, 0.1);
 }
 
 .btn-ghost:active:not(:disabled) {
@@ -288,8 +302,10 @@ select.field {
   border-radius: 9999px;
   background: var(--color-surface);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.1),
-    0 3px 8px rgba(0, 0, 0, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(27, 26, 24, 0.12),
+    0 4px 12px rgba(27, 26, 24, 0.1),
+    0 10px 24px rgba(27, 26, 24, 0.06);
   transition:
     left 0.38s cubic-bezier(0.3, 1.25, 0.45, 1),
     width 0.38s cubic-bezier(0.3, 1.25, 0.45, 1);

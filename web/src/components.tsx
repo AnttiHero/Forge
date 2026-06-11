@@ -87,7 +87,7 @@ export function WorkspaceSwitcher() {
         <span className="text-fog">▾</span>
       </button>
       {open && (
-        <div className="animate-pop-in absolute right-0 top-full z-40 mt-2 w-80 rounded-2xl border border-black/[0.08] bg-surface p-3 shadow-[0_8px_24px_rgba(0,0,0,0.10),0_28px_70px_rgba(0,0,0,0.16)]">
+        <div className="animate-pop-in absolute right-0 top-full z-40 mt-2 w-80 rounded-2xl border border-black/[0.08] bg-surface p-3 shadow-[0_2px_6px_rgba(27,26,24,0.06),0_16px_40px_rgba(27,26,24,0.14),0_48px_120px_rgba(27,26,24,0.2)]">
           <p className="px-2 pb-2 pt-1 text-[11px] leading-relaxed text-fog">
             Each client file is a separate, walled-off database; an ethical wall by construction. Only the open one is readable.
           </p>
@@ -426,7 +426,7 @@ export function PrivacyPanel({ onClose }: { onClose: () => void }) {
   return (
     <div className="animate-backdrop-in fixed inset-0 z-40 flex justify-end bg-black/25 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="glass animate-sheet-in h-full w-full max-w-2xl overflow-y-auto border-l border-black/[0.08] p-8 shadow-[-24px_0_80px_rgba(0,0,0,0.18)]"
+        className="glass animate-sheet-in h-full w-full max-w-2xl overflow-y-auto border-l border-black/[0.08] p-8 shadow-[-8px_0_24px_rgba(27,26,24,0.08),-32px_0_100px_rgba(27,26,24,0.22)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 flex items-center justify-between">
