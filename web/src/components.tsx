@@ -77,7 +77,11 @@ export function WorkspaceSwitcher() {
 
   return (
     <span className="relative">
-      <button onClick={() => setOpen((v) => !v)} className="btn-ghost max-w-52" title="Matter workspaces — each is a separate, walled-off file">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="btn-ghost max-w-52"
+        title={`${active?.name ?? 'Workspace'} — matter workspaces are separate, walled-off files`}
+      >
         <span className="text-fog">⊟</span>
         <span className="truncate">{active?.name ?? 'Workspace'}</span>
         <span className="text-fog">▾</span>
@@ -501,7 +505,7 @@ export function SectionTitle({
           {eyebrow}
         </p>
       )}
-      <h2 className="text-4xl font-semibold tracking-[-0.03em] text-bone md:text-5xl">{children}</h2>
+      <h1 className="text-4xl font-semibold tracking-[-0.03em] text-bone md:text-5xl">{children}</h1>
       {sub && <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-fog">{sub}</p>}
     </div>
   );

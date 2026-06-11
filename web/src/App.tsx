@@ -79,26 +79,30 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app-bg min-h-screen">
+    <div className="app-bg min-h-screen overflow-x-hidden">
       {intro && <Intro onDone={() => setIntro(false)} />}
       <header className={`glass hairline-b sticky top-0 z-20 transition-shadow duration-300 ${elevated ? 'header-elevated' : ''}`}>
-        <div className="mx-auto flex max-w-6xl items-center gap-6 px-6 py-3">
-          <h1 className="font-display text-2xl tracking-[0.25em] text-bone">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-3 px-6 py-3">
+          <div className="shrink-0 font-display text-2xl tracking-[0.25em] text-bone">
             FORGE<span className="text-ember">.</span>
-          </h1>
-          <div className="hidden md:block">
+          </div>
+          <div className="hidden min-w-0 flex-1 md:block">
             <SegmentedNav active={tab} onSelect={setTab} />
           </div>
-          <div className="ml-auto flex items-center gap-2.5">
+          <div className="ml-auto flex shrink-0 items-center gap-2.5">
             <WorkspaceSwitcher />
-            <StatusBadge />
+            <span className="hidden lg:inline-flex">
+              <StatusBadge />
+            </span>
             <button onClick={() => setPrivacyOpen(true)} className="btn-ghost whitespace-nowrap">
-              <span className="text-ember">●</span> What left your machine
+              <span className="text-ember">●</span>
+              <span className="hidden lg:inline"> What left your machine</span>
+              <span className="lg:hidden"> Privacy</span>
             </button>
           </div>
         </div>
         {/* mobile tabs */}
-        <nav className="flex gap-1 overflow-x-auto px-4 pb-3 md:hidden">
+        <nav className="flex gap-1 overflow-x-auto px-4 pb-3 md:hidden" aria-label="Sections">
           {TABS.map((t) => (
             <button
               key={t.key}
